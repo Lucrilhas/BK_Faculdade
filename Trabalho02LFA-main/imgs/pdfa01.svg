@@ -1,0 +1,78 @@
+<svg width="849" height="756" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0.00 0.00 358.4 122.02">
+<g id="graph0" class="graph" transform="translate(3.9999938964843977,118.01999603271486) scale(1)">
+<title>finite_state_machine</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-118.02 354.4,-118.02 354.4,4 -4,4"/>
+<!-- init -->
+<g id="node1" class="node">
+<title>init</title>
+<ellipse fill="black" stroke="black" cx="1.8" cy="-25.33" rx="1.8" ry="1.8"/>
+</g>
+<!-- q0 -->
+<g id="node3" class="node">
+<title>q0</title>
+<ellipse fill="none" stroke="black" cx="61.29" cy="-25.33" rx="20.89" ry="20.89"/>
+<text text-anchor="middle" x="61.29" y="-21.13" font-family="Helvetica,Arial,sans-serif" font-size="14.00">q0</text>
+</g>
+<!-- init&#45;&gt;q0 -->
+<g id="edge1" class="edge">
+<title>init-&gt;q0</title>
+<path fill="none" stroke="black" d="M3.8,-25.33C7.17,-25.33 18.55,-25.33 30.23,-25.33"/>
+<polygon fill="black" stroke="black" points="30.38,-28.83 40.38,-25.33 30.38,-21.83 30.38,-28.83"/>
+</g>
+<!-- q10 -->
+<g id="node2" class="node">
+<title>qf</title>
+<ellipse fill="none" stroke="black" cx="327.32" cy="-25.33" rx="19.15" ry="19.15"/>
+<ellipse fill="none" stroke="black" cx="327.32" cy="-25.33" rx="23.16" ry="23.16"/>
+<text text-anchor="middle" x="327.32" y="-21.13" font-family="Helvetica,Arial,sans-serif" font-size="14.00">qf</text>
+</g>
+<!-- q1 -->
+<g id="edge2" class="edge">
+<title>q0-&gt;q0</title>
+<path fill="none" stroke="black" d="M57.8,-46.03C57.42,-55.63 58.58,-64.02 61.29,-64.02 62.94,-64.02 64.02,-60.9 64.52,-56.3"/>
+<polygon fill="black" stroke="black" points="68.03,-56.11 64.79,-46.03 61.03,-55.93 68.03,-56.11"/>
+<text text-anchor="middle" x="61.29" y="-68.22" font-family="Helvetica,Arial,sans-serif" font-size="14.00">a [A → AA]</text>
+</g>
+<!-- q0&#45;&gt;q0 -->
+<g id="edge3" class="edge">
+<title style="">q0-&gt;q0</title>
+<path fill="none" stroke="black" d="M55.39,-45.38C52.61,-63.13 54.58,-82.02 61.29,-82.02 66.75,-82.02 69.07,-69.55 68.26,-55.35"/>
+<polygon fill="black" stroke="black" points="71.74,-54.95 67.2,-45.38 64.78,-55.69 71.74,-54.95"/>
+<text text-anchor="middle" x="61.29" y="-86.22" font-family="Helvetica,Arial,sans-serif" font-size="14.00" style="">a [Z → AZ]</text>
+</g>
+<!-- q0&#45;&gt;q0 -->
+
+<!-- q0&#45;&gt;q0 -->
+
+<!-- q0&#45;&gt;q0 -->
+<g id="edge4" class="edge">
+<title>q0-&gt;q1</title>
+<path fill="none" stroke="black" d="M82.01,-25.33C103.27,-25.33 137.36,-25.33 161.98,-25.33"/>
+<polygon fill="black" stroke="black" points="162.21,-28.83 172.21,-25.33 162.21,-21.83 162.21,-28.83"/>
+<text text-anchor="middle" x="127.2" y="-29.53" font-family="Helvetica,Arial,sans-serif" font-size="14.00">b [A → ε]</text>
+</g><g id="edge5" class="edge">
+<title style="">q0-&gt;q1</title>
+<path fill="none" stroke="black" d="M78.79,-13.87C85.12,-10.12 92.6,-6.43 99.99,-4.53 123.42,1.51 130.99,1.51 154.42,-4.53 158.57,-5.6 162.76,-7.23 166.75,-9.12"/>
+<polygon fill="black" stroke="black" points="165.15,-12.24 175.62,-13.87 168.45,-6.06 165.15,-12.24"/>
+<text text-anchor="middle" x="127.2" y="-8.53" font-family="Helvetica,Arial,sans-serif" font-size="14.00" style="">ε [Z → Z]</text>
+</g>
+<!-- q0&#45;&gt;q0 -->
+<g id="node4" class="node">
+<title>q1</title>
+<ellipse fill="none" stroke="black" cx="193.11" cy="-25.33" rx="20.89" ry="20.89"/>
+<text text-anchor="middle" x="193.11" y="-21.13" font-family="Helvetica,Arial,sans-serif" font-size="14.00">q1</text>
+</g>
+<!-- q0&#45;&gt;q -->
+<g id="edge7" class="edge">
+<title>q1-&gt;qf</title>
+<path fill="none" stroke="black" d="M213.91,-25.33C235.08,-25.33 269.01,-25.33 294.05,-25.33"/>
+<polygon fill="black" stroke="black" points="294.18,-28.83 304.18,-25.33 294.18,-21.83 294.18,-28.83"/>
+<text text-anchor="middle" x="259.02" y="-29.53" font-family="Helvetica,Arial,sans-serif" font-size="14.00">ε [Z → Z]</text>
+</g><g id="edge6" class="edge">
+<title>q1-&gt;q1</title>
+<path fill="none" stroke="black" d="M181.96,-42.84C179.27,-53.69 182.99,-64.02 193.11,-64.02 199.92,-64.02 203.83,-59.36 204.85,-53"/>
+<polygon fill="black" stroke="black" points="208.33,-52.62 204.27,-42.84 201.34,-53.02 208.33,-52.62"/>
+<text text-anchor="middle" x="193.11" y="-68.22" font-family="Helvetica,Arial,sans-serif" font-size="14.00">b [A → ε]</text>
+</g>
+</g>
+</svg>

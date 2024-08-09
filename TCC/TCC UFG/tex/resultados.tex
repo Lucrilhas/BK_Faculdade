@@ -1,0 +1,463 @@
+\section{Considerações iniciais}
+Neste capítulo é descrito quais configurações iniciais são utilizadas para a realização de todos os experimentos.
+Em seguida são apresentados os resultados que cada arquitetura utilizada obteve, junto com a explicação destes.
+Para finalizar, os resultados de cada arquitetura são postos lado a lado, para uma comparação direta.
+
+\section{Configurações}
+Para realizar os experimentos, primeiramente foi definido uma \textit{seed} de valor 240 para possíveis replicações do resultado.
+
+A implementação dos modelos é provida inteiramente pelas bibliotecas Tensorflow \cite{tensorflow2015-whitepaper} e Keras \cite{chollet2015keras}, dessa forma se mantêm as configurações de camada padrões, comentadas em \autoref{dl:arquiteturas}. 
+Exceto as camadas superiores que são refeitas para aceitar um tamanho de imagem diferente do padrão.
+
+Os parâmetros utilizados são declarados durante a compilação, ou inicialização, do modelo.
+A compilação do modelo é realizada utilizando o otimizador Adam \cite{kingma2014adam} com taxa de aprendizagem $1e^{-7}$, e como função de ativação das camadas finais (Camadas de classificação), a função \textit{softmax}. 
+
+Além disso, durante a compilação do modelo é definido como respostas esperadas a acurácia (\autoref{eqn:acuracia}) e o \textit{loss}, calculado utilizando o método \textit{categorical cross entropy} (\autoref{eqn:cce}).
+
+
+Para cada arquitetura, variando entre com ou sem \sigla{TL}{\textit{Transfer learning}}, e para cada base de dados, o treinamento é realizado utilizando a validação cruzada \textit{stratified K-fold} com 10 grupos ($k=10$).
+Cada um dos treinamentos de cada grupo das validações cruzadas é feito com 100 épocas.
+Esse valor foi escolhido por conta de testes realizados em modelos que não utilizavam de \textit{transfer learning}, onde não era observado nenhum resultado aceitável com menos épocas.
+Por conta que há comparação dos modelos, para todos foram utilizados os mesmos parâmetros.
+Dessa forma, até mesmo os que utilizam \textit{transfer learning} foram treinados com 100 épocas, o que difere dos trabalhos correlatos (\autoref{chapter:correlatos}), que utilizam bem menos épocas.
+
+
+
+\section{Resultados do modelo VGG16}
+\subsection{VGG16 sem transferência de aprendizado}
+
+Os resultados dos experimentos com o modelo VGG16 sem transferência de aprendizado são apresentados na \autoref{tab:media_kf_vgg} para a validação cruzada estratificada e \autoref{tab:10_vgg} para os testes realizados nos 10\% de testes de cada base.
+
+\begin{table}[htb]
+\centering
+\caption{Resultados da validação cruzada estratificada 10-\textit{fold} para o VGG16 sem transferência de aprendizado.}
+\caption*{
+Considere: 'Acc' como acurácia da validação; 'E' como \textit{loss} da validação; 'Var' como variância; $\sigma$ como desvio padrão.
+}
+\label{tab:media_kf_vgg}
+\begin{tabularx}{\textwidth}{|X|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|}
+\hline
+Base de dados & \citeonline{zhang_base2018} & \citeonline{maguire2018sdnet2018} & \citeonline{zoubir2021crack} & \citeonline{xu2019automatic} & Subconjunto 40k \\ \hline \hline
+Média (Acc) & 98,90\% & 84,87\% & 72,51\% & 66,82\% & 81,86\%\\ \hline
+Var (Acc) & 0,000454\% & 0,000001\% & 0,000209\% & 0,000026\% & 0,002027\%\\ \hline
+$\sigma$ (Acc) & 0,21\% & 0,01\% & 0,14\% & 0,05\% & 0,45\%\\ \hline \hline
+Média (E) & 3,56\% & 40,74\% & 59,11\% & 62,79\% & 39,76\%\\ \hline
+Var (E) & 0,0023\% & 0,0011\% & 0,0017\% & 0,0006\% & 0,0076\%\\ \hline
+$\sigma$ (E) & 0,48\% & 0,33\% & 0,41\% & 0,24\% & 0,87\%\\ \hline
+
+\end{tabularx}
+\fdadospesquisa
+\end{table}
+
+\begin{table}[htb]
+\centering
+\caption{Resultados do melhor modelo nos testes para o VGG16 sem transferência de aprendizado.}
+\label{tab:10_vgg}
+\begin{tabularx}{\textwidth}{|X|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|}
+\hline
+Base de dados & \citeonline{zhang_base2018} & \citeonline{maguire2018sdnet2018} & \citeonline{zoubir2021crack} & \citeonline{xu2019automatic} & Subconjunto 40k \\ \hline \hline
+Acurácia & 99.22\% & 84.88\% & 72.51\% & 66.89\% & 81.62\% \\ \hline
+Precisão & 99.65\% & 0.00\% & 0.00\% & 66.89\% & 90.11\% \\ \hline
+Sensibilidade & 98.80\% & 0.00\% & 0.00\% & 100.00\% & 71.05\% \\ \hline
+Especificidade & 99.65\% & 100.00\% & 100.00\% & 0.00\% & 92.20\% \\ \hline
+$F_{1}-Score$ & 99.22\% & 0.00\% & 0.00\% & 80.16\% & 79.45\% \\ \hline
+\end{tabularx}
+\fdadospesquisa
+\end{table}
+
+Ao analisar os resultados da validação cruzada apresentados na \autoref{tab:media_kf_vgg}, podemos afirmar que o modelo é consistente, independentemente da base de dados utilizada. 
+Isso é evidenciado pela baixa variância, que nunca excede 0,001\%, e o desvio padrão, que nunca é maior que 1\%.
+
+Em seguida, pode ser observado que em todas as bases de dados, com exceção de \citeonline{zhang_base2018}, há um \textit{loss} muito alto, de 40\% para cima.
+Isso demonstra que o modelo treinado nessas bases está com um desempenho ruim e, possivelmente, com problemas graves de \textit{overfitting} ou \textit{underfitting}.
+Entretanto, esses mesmos modelos estão com acurácias que não demonstram o mesmo, com valores acima de 60\%.
+
+No caso dos estudos de \citeonline{maguire2018sdnet2018} e \citeonline{zoubir2021crack}, os problemas de desempenho podem ser atribuídos ao desbalanceamento de classes em seus conjuntos de dados. 
+Isso é reforçado pela análise da \autoref{tab:10_vgg}, que possui uma precisão de 0\% e especificidade de 100\% que mostra que todas as classificações foram feitas para o rótulo desbalanceado.
+
+Já para o caso de \citeonline{xu2019automatic}, o mesmo problema de desbalanceamento acontece, porém nesse caso o rótulo de maior quantidade é o positivo, ou fissurado.
+Isso pode ser percebido pela especificidade de 0\% e sensibilidade de 100\% na \autoref{tab:10_vgg}.
+
+É interessante observar que, mesmo sendo balanceada, a base 'Subconjunto 40k' apresentou um valor de \textit{loss} elevado. 
+Nesse caso, ao analisar os demais resultados apresentados na \autoref{tab:10_vgg}, é possível argumentar que o modelo não conseguiu aprender suficientemente as características necessárias para obter um desempenho superior a 90\%, que seria o ideal. 
+Apesar disso, é importante ressaltar que o modelo ainda apresentou um resultado final aceitável, com um f1-score de cerca de 80\%. 
+É possível que esse resultado tenha sido influenciado por fatores como o número insuficiente de épocas ou um \textit{learning rate} muito baixo, entre outros possíveis motivos.
+
+Por fim, a única exceção, a base de \citeonline{zhang_base2018} apresenta ótimos resultados, todos acima de 98\%.
+Porém, seu \textit{loss} de 3,5\% o que demonstra que o modelo ainda tem uma margem para melhorar na minimização da função de perda durante o treinamento.
+No geral, as métricas apresentadas na \autoref{tab:10_vgg} indicam que o modelo foi capaz de aprender com sucesso as características relevantes para classificar corretamente a grande maioria dos exemplos em ambas as classes.
+
+
+\subsection{VGG16 com transferência de aprendizado}
+
+Os resultados dos experimentos com o modelo VGG16 com transferência de aprendizado são apresentados na \autoref{tab:media_kf_vggTL} para a validação cruzada estratificada e \autoref{tab:10_vggTL} para os testes realizados nos 10\% de testes de cada base.
+
+\begin{table}[htb]
+\centering
+
+\caption{Resultados da validação cruzada estratificada 10-\textit{fold} para o VGG16 com transferência de aprendizado.}
+\caption*{
+Considere: 'Acc' como acurácia da validação; 'E' como \textit{loss} da validação; 'Var' como variância; $\sigma$ como desvio padrão.
+}
+\label{tab:media_kf_vggTL}
+\begin{tabularx}{\textwidth}{|X|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|}
+\hline
+Base de dados & \citeonline{zhang_base2018} & \citeonline{maguire2018sdnet2018} & \citeonline{zoubir2021crack} & \citeonline{xu2019automatic} & Subconjunto 40k \\ \hline \hline
+Média (Acc) & 99,90\% & 93,46\% & 98,74\% & 99,65\% & 94,74\%\\ \hline
+Var (Acc) & 0,00002\% & 0,00097\% & 0,00244\% & 0,00070\% & 0,00072\%\\ \hline
+$\sigma$ (Acc) & 0,04\% & 0,31\% & 0,49\% & 0,27\% & 0,27\%\\ \hline \hline
+Média (E) & 0,41\% & 18,68\% & 4,69\% & 1,34\% & 13,85\%\\ \hline
+Var (E) & 0,0005\% & 0,0049\% & 0,0327\% & 0,0064\% & 0,0067\%\\ \hline
+$\sigma$ (E) & 0,23\% & 0,70\% & 1,81\% & 0,80\% & 0,82\%\\ \hline
+\end{tabularx}
+\fdadospesquisa
+\end{table}
+
+\begin{table}[htb]
+\centering
+
+\caption{Resultados do melhor modelo nos testes para o VGG16 com transferência de aprendizado.}
+\label{tab:10_vggTL}
+\begin{tabularx}{\textwidth}{|X|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|}
+\hline
+Base de dados & \citeonline{zhang_base2018} & \citeonline{maguire2018sdnet2018} & \citeonline{zoubir2021crack} & \citeonline{xu2019automatic} & Subconjunto 40k \\ \hline \hline
+Acurácia & 99.90\% & 93.67\% & 97.12\% & 99.84\% & 94.70\% \\ \hline
+Precisão & 99.95\% & 87.41\% & 94.44\% & 100.00\% & 97.65\% \\ \hline
+Sensibilidade & 99.85\% & 67.92\% & 93.41\% & 99.75\% & 91.60\% \\ \hline
+Especificidade & 99.95\% & 98.26\% & 98.28\% & 100.00\% & 97.80\% \\ \hline
+$F_{1}-Score$ & 99.90\% & 76.44\% & 93.92\% & 99.88\% & 94.53\% \\ \hline
+\end{tabularx}
+\fdadospesquisa
+\end{table}
+
+
+É necessário uma análise mínima para reconhecer a diferença entre os resultados obtidos ao utilizar a transferência de aprendizado no VGG 16 e quando essa técnica não é aplicada.
+
+A base de \citeonline{zhang_base2018} sem a transferência de aprendizado obteve bons resultados, mas demonstrava capacidade de melhora por conta de seu \textit{loss}.
+Com a transferência de aprendizado, houve um aumento da acurácia e do $F_{1}-Score$, além de reduzir o valor de \textit{loss} para as casa decimais.
+
+A utilização da transferência de aprendizado proporcionou melhorias na capacidade de classificação das bases de dados de \citeonline{maguire2018sdnet2018}; \citeonline{zoubir2021crack} e \citeonline{xu2019automatic}, que anteriormente apresentavam limitações. 
+Os resultados obtidos após a aplicação da transferência de aprendizado foram satisfatórios e demonstraram que o modelo aprendeu a classificar as imagens de forma mais eficaz.
+Entretanto, em especial a base de \citeonline{maguire2018sdnet2018} obteve resultados abaixo da média ao comparar com as outras bases.
+Infelizmente, apenas com os dados presentes nos experimentos não há como definir exatamente o motivo.
+Porém, pode se argumentar que o causador deste problema é o desbalanceamento, ou que a base apresenta cenários difíceis para o aprendizado do modelo.
+
+A base de dados 'Subconjunto 40k', que anteriormente não conseguiu atender aos requisitos necessários para alcançar os objetivos desta monografia, foi capaz de alcançá-los através da utilização da transferência de aprendizado. 
+No entanto, apesar de ter uma acurácia e $F_{1}$-Score de 94\%, seu valor de \textit{loss} de 13\% indica que ainda há espaço para melhorias. 
+Esse resultado pode sugerir que a base de dados seja mais desafiadora, uma vez que é uma combinação de várias outras bases e, portanto, apresenta uma variação maior de características.
+
+É crucial destacar que os valores de variância e desvio padrão continuam extremamente baixos, o que indica a consistência do modelo.
+Essa consistência é um indicativo de que o modelo é robusto e pode ser generalizado para outras bases de dados.
+No entanto, é importante notar que houve um ligeiro aumento desses valores em comparação com os modelos que não utilizaram transferência de aprendizado. 
+Esse aumento pode ser explicado pela incorporação de novas informações do conjunto de dados de origem durante o processo de transferência de aprendizado, o que pode levar a uma maior variabilidade nos resultados. 
+Em geral, esse aumento não afeta significativamente a qualidade do modelo, mas deve ser considerado ao avaliar sua performance.
+
+Por fim, ao comparar os resultados do modelo com e sem a transferência de aprendizado, observou-se que os resultados com a técnica foram satisfatórios, ao contrário dos resultados sem. 
+Por esse motivo, os experimentos sem transferência de aprendizado foram descontinuados, já que eles dobram o custo computacional sem trazer benefícios significativos.
+
+
+\section{Resultados do modelo Densenet}
+
+Os resultados dos experimentos com o modelo Densenet com transferência de aprendizado são apresentados na \autoref{tab:media_kf_dense} para a validação cruzada estratificada e \autoref{tab:10_dense} para os testes realizados nos 10\% de testes de cada base.
+
+\begin{table}[htb]
+\centering
+\caption{Resultados da validação cruzada estratificada 10-\textit{fold} para o Densenet.}
+\caption*{
+Considere: 'Acc' como acurácia da validação; 'E' como \textit{loss} da validação; 'Var' como variância; $\sigma$ como desvio padrão.
+}
+\label{tab:media_kf_dense}
+\begin{tabularx}{\textwidth}{|X|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|}
+\hline
+Base de dados & \citeonline{zhang_base2018} & \citeonline{maguire2018sdnet2018} & \citeonline{zoubir2021crack} & \citeonline{xu2019automatic} & Subconjunto 40k \\ \hline \hline
+Média (Acc) & 99,85\% & 91,83\% & 97,77\% & 99,08\% & 93,48\%\\ \hline
+Var (Acc) & 0,00004\% & 0,00077\% & 0,00300\% & 0,00172\% & 0,00062\%\\ \hline
+$\sigma$ (Acc) & 0,07\% & 0,28\% & 0,55\% & 0,41\% & 0,25\%\\ \hline \hline
+Média (E) & 0,68\% & 29,87\% & 6,86\% & 2,70\% & 21,23\%\\ \hline
+Var (E) & 0,001\% & 0,013\% & 0,034\% & 0,013\% & 0,009\%\\ \hline
+$\sigma$ (E) & 0,31\% & 1,16\% & 1,85\% & 1,15\% & 0,97\%\\ \hline
+\end{tabularx}
+\fdadospesquisa
+\end{table}
+
+\begin{table}[htb]
+\centering
+\caption{Resultados do melhor modelo nos testes para o Densenet.}
+\label{tab:10_dense}
+\begin{tabularx}{\textwidth}{|X|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|}
+\hline
+Base de dados & \citeonline{zhang_base2018} & \citeonline{maguire2018sdnet2018} & \citeonline{zoubir2021crack} & \citeonline{xu2019automatic} & Subconjunto 40k \\ \hline \hline
+Acurácia & 99.92\% & 91.51\% & 97.64\% & 99.51\% & 93.03\% \\ \hline
+Precisão & 99.90\% & 80.00\% & 98.98\% & 100.00\% & 95.12\% \\ \hline
+Sensibilidade & 99.95\% & 58.49\% & 92.38\% & 99.26\% & 90.70\% \\ \hline
+Especificidade & 99.90\% & 97.40\% & 99.64\% & 100.00\% & 95.35\% \\ \hline
+$F_{1}-Score$ & 99.93\% & 67.57\% & 95.57\% & 99.63\% & 92.86\% \\ \hline
+\end{tabularx}
+\fdadospesquisa
+\end{table}
+
+O modelo Densenet demonstra ter uma ótima acurácia, com valores de acurácia acima de 90\% e com desvio padrão na casa do decimais.
+Entretanto apresenta valores de \textit{loss} relativamente altos, e com variância deste \textit{loss} acima de 1\%, podendo representar que o modelo tem instabilidade.
+
+
+Adicionalmente, a análise das bases de dados SDNET2018 de \citeonline{maguire2018sdnet2018} e 'Subconjunto 40k' revela que há uma redução significativa na taxa de verdadeiros positivos (Sensibilidade), o que afeta negativamente o valor do $F_{1}-Score$. 
+Este resultado sugere que o modelo está ainda classificando muitas imagens como positivas, ou com fissuras, quando na verdade não estão. 
+Uma das possíveis razões para isso é que o modelo treinado nessas bases não foi capaz realmente de diferenciar algumas texturas das imagens saudáveis, das imagens que possuem fissura, ou seja, diferenciar totalmente o negativo do positivo.
+Esse argumento é reforçado ao considerar que os modelos treinados nessas bases possuem valores de \textit{loss} consideravelmente altos  em comparação com as outras bases, com valores acima de 20\%.
+
+A base de \citeonline{zoubir2021crack} apresenta alta acurácia, com valores acima de 97\%.
+Entretanto,m há um considerável diminuição para o $F_{1}-Score$, causada pelo sua sensibilidade menor que 93\%, que em conjunto com seu \textit{loss} de praticamente 7\%, demonstra uma fragilidade do modelo treinado nessa base.
+
+Por fim, as bases de \citeonline{xu2019automatic} e \citeonline{zhang_base2018}, apresentam ótimos resultados, com acurácia e $F_{1}-Score$ bem proximos de 100\%.
+Além disso, o baixo valor de \textit{loss} de ambos modelos demonstram que os modelos estão bem ajustados.
+Embora no caso de \citeonline{xu2019automatic}, o valor de \textit{loss} ainda permite melhoras ao modelo.
+
+\section{Resultados do modelo ResNet}
+
+Os resultados dos experimentos com o modelo Resnet com transferência de aprendizado são apresentados na \autoref{tab:media_kf_res} para a validação cruzada estratificada e \autoref{tab:10_res} para os testes realizados nos 10\% de testes de cada base.
+
+\begin{table}[htb]
+\centering
+\caption{Resultados da validação cruzada estratificada 10-\textit{fold} para o Resnet.}
+\caption*{
+Considere: 'Acc' como acurácia da validação; 'E' como \textit{loss} da validação; 'Var' como variância; $\sigma$ como desvio padrão.
+}
+\label{tab:media_kf_res}
+\begin{tabularx}{\textwidth}{|X|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|}
+\hline
+Base de dados & \citeonline{zhang_base2018} & \citeonline{maguire2018sdnet2018} & \citeonline{zoubir2021crack} & \citeonline{xu2019automatic} & Subconjunto 40k \\ \hline \hline
+Média (Acc) & 99,77\% & 91,28\% & 96,16\% & 98,51\% & 92,83\%\\ \hline
+Var (Acc) & 0,00006\% & 0,00153\% & 0,01029\% & 0,00197\% & 0,00116\%\\ \hline
+$\sigma$ (Acc) & 0,08\% & 0,39\% & 1,01\% & 0,44\% & 0,34\%\\ \hline \hline
+Média (E) & 1,06\% & 35,76\% & 10,37\% & 4,62\% & 26,21\%\\ \hline
+Var (E) & 0,002\% & 0,029\% & 0,077\% & 0,027\% & 0,007\%\\ \hline
+$\sigma$ (E) & 0,42\% & 1,70\% & 2,77\% & 1,66\% & 0,81\%\\ \hline
+\end{tabularx}
+\fdadospesquisa
+\end{table}
+
+\begin{table}[htb]
+\centering
+\caption{Resultados do melhor modelo nos testes para o Resnet.}
+\label{tab:10_res}
+\begin{tabularx}{\textwidth}{|X|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|}
+\hline
+Base de dados & \citeonline{zhang_base2018} & \citeonline{maguire2018sdnet2018} & \citeonline{zoubir2021crack} & \citeonline{xu2019automatic} & Subconjunto 40k \\ \hline \hline
+Acurácia & 99,92\% & 91,73\% & 97,38\% & 99,34\% & 92,65\% \\ \hline
+Precisão & 99,90\% & 80,48\% & 97,98\% & 100,00\% & 94,99\% \\ \hline
+Sensibilidade & 99,95\% & 59,79\% & 92,38\% & 99,01\% & 90,05\% \\ \hline
+Especificidade & 99,90\% & 97,42\% & 99,28\% & 100,00\% & 95,25\% \\ \hline
+$F_{1}-Score$ & 99,93\% & 68,61\% & 95,10\% & 99,50\% & 92,45\% \\ \hline
+\end{tabularx}
+\fdadospesquisa
+\end{table}
+
+Em geral, o modelo ResNet alcança ótimos resultados, com acurácias e $F_{1}$-Score consistentemente acima de 90\% para a maioria dos casos. 
+A única exceção é a base de dados SDNET 2018, proposta por \citeonline{maguire2018sdnet2018}, onde a variância e o desvio padrão da acurácia começam a se tornar significativos, com valores maiores do que 0,01\% e 1\%, respectivamente. 
+Além disso, a base de \citeonline{maguire2018sdnet2018} apresenta um grande \textit{loss}, representando uma possível falta de aprendizado por conta do modelo.
+
+Embora o erro nas demais bases seja considerável, já que todos estão acima de 1\%, é importante ressaltar que o $F_{1}-Score$ dessas bases ainda é alto. 
+Isso sugere que, mesmo com erros maiores, o modelo ResNet ainda é capaz de realizar uma classificação eficiente. 
+No entanto, é importante levar em consideração que, em determinados casos, um erro maior pode ter consequências mais significativas e, portanto, medidas devem ser tomadas para reduzir esse erro.
+Para isso, sugere-se realizar ajustes dos hiperparâmetros do modelo, ou mesmo mudar o tipo de pré-processamento de dados para melhorar a qualidade da entrada para o modelo.
+
+\section{Comparação dos modelos e das bases}
+\label{sub:compa}
+
+A análise conjunta dos resultados obtidos pelos modelos com transferência de aprendizado VGG16, Densenet e Resnet, permite a sua comparação.
+Fazendo o calculo de média aritmética dos resultados de $F_{1}-Score$ dos modelos.
+A escolha do $F_{1}-Score$, se deve ao fato de que ele é uma medida que leva em consideração tanto a precisão quanto a revocação do modelo. 
+Isso significa que o $F_{1}$-Score é uma métrica mais robusta do que a acurácia em situações em que as classes estão desbalanceadas ou quando o objetivo é minimizar tanto os falsos positivos quanto os falsos negativos.
+
+Com base na análise dos resultados dos testes, é possível verificar que os modelos VGG16, Densenet e Resnet apresentaram valores médios de $F_{1}-Score$ de 92,93\%, 91,11\% e 91,12\%, respectivamente.
+Observando esses resultados, é possível concluir que o modelo VGG16 obteve o melhor desempenho médio em comparação aos outros modelos avaliados. 
+No entanto, é importante salientar que essa conclusão deve ser interpretada com cuidado e levando em consideração o contexto específico da aplicação dos modelos, bem como as características das bases de dados utilizadas no experimento.
+
+Com relação às bases de dados utilizadas, verificou-se que a base de \citeonline{zhang_base2018} apresentou os melhores resultados em todas as métricas avaliadas. 
+É interessante notar que essa base foi a única em que o modelo VGG16 apresentou bons resultados sem a utilização de transferência de aprendizado, o que sugere que essa base pode apresentar características mais fáceis de serem aprendidas pelos modelos.
+Embora o autor não tenha especificado, uma análise visual das imagens dessa base indica que as fissuras presentes têm largura considerável, o que pode ter facilitado a detecção das mesmas pelos modelos treinados.
+No entanto, como já comentado na \autoref{sub:bases}, é importante mencionar que há um problema relacionado ao número de imagens disponíveis na base. 
+O número de imagens disponíveis para download e o número de imagens mencionado no artigo original são cerca de 4 imagens, podendo ter afetado os resultados, especialmente se essas imagens faltantes contivessem informações cruciais.
+Em diversos casos, os modelos apresentaram uma acurácia de 99,9\% ou superior, contudo, é possível que essas mesmas imagens, erroneamente rotuladas, tenham impedido o modelo de atingir a marca de 100\%.
+Por fim, a análise visual também permite perceber que a textura de fundo não é sempre a mesma, tendo variação considerável entre textura lisa, áspera e com marcas.
+Contudo, essas imagens não possuem elementos que o modelo poderia confundir com as fissuras.
+
+
+A base de \citeonline{xu2019automatic} obteve, de modo geral, excelentes resultados em relação ao $F_{1}-Score$ e acurácia, sempre superiores a 98\%. 
+No entanto, é importante mencionar que sua média de perda variou de 1\% a 5\% dependendo do modelo, o que indica a possibilidade de melhoria de seus resultados. 
+Observa-se, porém, que a maioria das fissuras têm larguras facilmente detectáveis ao analisar visualmente a base.
+Da mesma forma que a base de \citeonline{zhang_base2018}, a análise visual permite observar variações consideráveis na textura de fundo, o que é benéfico para a generalização do modelo.
+Entretanto, algumas fissuras de pequena largura podem ter sido perdidas durante a redução de resolução para a entrada do modelo. 
+
+A base de \citeonline{zoubir2021crack} apresenta resultados de $F_{1}-Score$ entre 93\% e 95\%, e precisão de 94\% a 98\%, que são ótimo resultados mas que mostram que há grande quantidade de falsos positivos.
+Além disso, esse modelo apresenta uma variação de \textit{loss} entre 5\% e 10\%, o que representa que independente do modelo, a base apresenta problemas de aprendizado.
+Uma análise visual permite perceber que há uma variação muito grande de texturas de fundo da imagem, o que pode se tornar problemático dado a baixa quantidade de imagens da base.
+Fora que, existem alguns casos em que a diferença entre um elemento da textura e uma fissura é de difícil interpretação.
+Para mais, a base conta com uma alta variedade de tipos de fissuras.
+Por conta disso, é sugerido que ao utilizar essa base, seja utilizada técnicas de \textit{data augmentation} para aumentar a quantidade de imagens.
+
+
+A base SDNET2018, criada por \citeonline{maguire2018sdnet2018}, apresenta resultados controversos em relação ao desempenho do modelo. 
+Os valores de $F_{1}-Score$ variam entre 68\% e 76\%, enquanto a precisão varia de 80\% a 86\%. 
+Já a sensibilidade, ou \textit{recall}, varia de 58\% a 68\%. 
+Essa variação nos resultados pode ser atribuída a diversos fatores, como a qualidade das imagens, a variação na textura do fundo, o desbalanceamento de classes e a presença de ruídos.
+No geral, a base SDNET2018 é uma das mais completas em termos de quantidade de imagens e variedade de características apresentadas.
+Isso faz com que os modelos treinados com essa base sejam mais genéricos e capazes de lidar com uma maior diversidade de situações.
+Por outro lado, isso também faz com que os modelos sejam mais difíceis de serem treinados, requerendo a utilização de mais técnicas, como \textit{data augmentation}, e escolha mais precisa de seus parâmetros e hiperparâmetros.
+Também vale citar que dentre as bases utilizadas, essa é a base que apresenta imagens com maior resolução, logo, sendo a mais prejudicada por conta da redução de resolução.
+Como os autores \citeonline{maguire2018sdnet2018} descrevem, há fissuras de 6 milímetros de largura, tendo grande chance destas sumirem durante esta redução.
+De forma geral, pela quantidade de problemas, os resultados foram satisfatórios.
+
+Por fim, a base 'Subconjunto 40k', que novamente, é um subconjunto de todas as imagens, obteve ótimos resultados, com valores de $F_{1}-Score$ variando entre 92\% e 94\%.
+Contudo, obteve valores de \textit{loss} de 13\% a 27\%, que representam um desempenho abaixo do esperado e indicam que o modelo ainda tem capacidade de ser aprimorado.
+No geral, por conter imagens de todas as outras bases, parte dos problemas presentes nessas bases viram problemas nesta também.
+Por outro lado, essa é uma base útil por ser grande e diversificada e que cobre uma ampla gama de situações e condições.
+Por conta disso, seus resultados são considerados satisfatórios.
+
+\section{Comparação da aplicação das bases em outras bases}
+
+% As Tabelas \ref{tab:zhang}, \ref{tab:sdnet2018}, \ref{tab:hajar}, \ref{tab:xu} e \ref{tab:subs}
+
+As Tabelas de \ref{tab:zhang} a \ref{tab:subs} apresentam um comparativo dos resultados obtidos ao testar modelos treinados em uma base de dados em outras bases, incluindo a união dessas bases.
+O método de análise utilizado foi o $F_{1}$-Score, e todos os resultados apresentados nessas tabelas correspondem aos cálculos desse indicador.
+
+\subsection{Treinamento na base de \citeonline{zhang_base2018}}
+
+\begin{table}[htb]
+\centering
+\caption{Resultados dos modelos treinados na base de \citeonline{zhang_base2018} testados em outras bases.}
+\label{tab:zhang}
+\begin{tabular}{|l|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|}
+\hline
+\diagbox[]{Modelo\\utilizado}{Base\\testada} & \citeonline{maguire2018sdnet2018} & \citeonline{zoubir2021crack} & \citeonline{xu2019automatic} & União das três bases. \\ \hline \hline
+VGG16 sem TL & 22.05\% & 46.49\% & 83.99\% & 35.41\% \\ \hline
+VGG16 com TL & 35.99\% & 83.99\% & 97.06\% & 59.77\% \\ \hline
+Densenet & 32.08\% & 80.80\% & 90.75\% & 57.31\% \\ \hline
+Resnet & 38.73\% & 80.36\% & 93.24\% & 59.94\% \\ \hline
+\end{tabular}
+\fdadospesquisa
+\end{table}
+
+Os resultados apresentados na \autoref{tab:zhang} indicam uma falta de capacidade da base de \citeonline{zhang_base2018} para generalizar os dados. 
+Isso é oposto aos resultados obtidos em validação cruzada estratificada e testes, onde a base apresentou resultados ótimos quando usada apenas em sua própria base de dados.
+
+Esses resultados ajudam a fundamentar a análise visual apresentada na \autoref{sub:compa}, já que, como mencionado, as fissuras na base de dados são todas muito visíveis e largas. 
+Portanto, quando aplicados em outras bases que possuem fissuras menores, os modelos treinados nessa base não apresentam resultados satisfatórios. 
+A exceção são os resultados de \citeonline{xu2019automatic}, o que pode indicar que ambas as bases possuem características similares.
+
+Ao realizar a média aritmética de cada linha da \autoref{tab:zhang}, é possível obter a média da performance de cada modelo.
+Os modelos VGG16 sem transferência de aprendizado, VGG16 com transferência de aprendizado, Densenet e Resnet apresentaram, em média, valores de $F_{1}$-Score de 46,98\% 69,20\% 65,23\% e 68,07\%, respectivamente.
+Dessa forma, o modelo VGG16 com a transferência de aprendizado obteve a melhor média de desempenho, seguido por Resnet.
+É importante ressaltar que o modelo VGG16 sem transferência de aprendizado apresentou aprendizado quando treinado na base de \citeonline{zhang_base2018}, no entanto, os resultados foram significativamente inferiores aos modelos que utilizam a transferência de aprendizado.
+
+\subsection{Treinamento na base de \citeonline{maguire2018sdnet2018}}
+
+\begin{table}[htb]
+\centering
+\caption{Resultados dos modelos treinados na base SDNET2018 de \citeonline{maguire2018sdnet2018} testados em outras bases.}
+\label{tab:sdnet2018}
+\begin{tabular}{|l|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|}
+\hline
+\diagbox[]{Modelo\\utilizado}{Base\\testada} & \citeonline{zhang_base2018} & \citeonline{zoubir2021crack} & \citeonline{xu2019automatic} & União das três bases. \\ \hline \hline
+VGG16 sem TL & 0.00\% & 0.00\% & 0.00\% & 0.00\% \\ \hline
+VGG16 com TL & 84.00\% & 78.40\% & 96.13\% & 85.68\% \\ \hline
+Densenet & 87.55\% & 83.74\% & 95.49\% & 88.72\% \\ \hline
+Resnet & 82.68\% & 85.61\% & 94.03\% & 84.80\% \\ \hline
+\end{tabular}
+\fdadospesquisa
+\end{table}
+
+Ao contrário dos resultados obtidos na validação cruzada estratificada e nos testes, em que a base apresentou resultados duvidosos, na \autoref{tab:sdnet2018} é possível observar que os modelos treinados na base de \citeonline{maguire2018sdnet2018} conseguiram realizar uma boa abstração das características necessárias para identificar fissuras. 
+Esses resultados destacam, mais uma vez, por que o SDNET2018 é reconhecido no campo acadêmico.
+
+Nesse caso, as médias obtidas pelos modelos foram de 0,0\%, 86,05\%, 88,87\% e 86,78\%. 
+Portanto, o modelo que obteve melhor desempenho foi o Densenet, seguido pelo Resnet.
+
+\subsection{Treinamento na base de \citeonline{zoubir2021crack}}
+\begin{table}[htb]
+\centering
+\caption{Resultados dos modelos treinados na base de \citeonline{zoubir2021crack} testados em outras bases.}
+\label{tab:hajar}
+\begin{tabular}{|l|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|}
+\hline
+\diagbox[]{Modelo\\utilizado}{Base\\testada} & \citeonline{zhang_base2018} & \citeonline{maguire2018sdnet2018} & \citeonline{xu2019automatic} & União das três bases. \\ \hline \hline
+VGG16 sem TL & 0.00\% & 0.00\% & 0.00\% & 0.00\% \\ \hline
+VGG16 com TL & 83.88\% & 39.32\% & 92.36\% & 73.61\% \\ \hline
+Densenet & 69.59\% & 33.17\% & 85.38\% & 64.01\% \\ \hline
+Resnet & 87.40\% & 36.73\% & 88.13\% & 77.02\% \\ \hline
+\end{tabular}
+\fdadospesquisa
+\end{table}
+
+Os resultados apresentados na \autoref{tab:hajar} demonstram resultados insatisfatórios.
+Logo, pode se definir que a base de \citeonline{zoubir2021crack} por si só não é uma boa alternativa para treinamento de modelos de rede neurais caso o objetivo seja detectar de forma geral imagens de fissuras.
+
+É importante destacar, no entanto, que essa conclusão não invalida o potencial da base de dados para aplicações específicas, bem como para o uso em conjunto com outras bases de dados para um melhor desempenho de modelos de redes neurais voltados para a detecção de imagens de fissuras.
+Além disso, é possível que o uso de técnicas de \textit{data augmentation} possa tornar essa base mais robusta e melhorar sua capacidade de generalização para a detecção de fissuras em imagens. 
+A aplicação de técnicas de \textit{data augmentation} pode ajudar a aumentar a variabilidade dos dados de treinamento e, assim, melhorar o desempenho de modelos de redes neurais treinados com essa base.
+
+Quando treinados nessa base de dados e testado nas outras bases de dados, os modelos testados tiveram em média, valores de $F_{1}$-Score 0,0\%, 72,29\%, 63,04\% e 72,32\%..
+Assim, o modelo Resnet obteve os melhores resultados, seguido pelo VGG16 com transferência de aprendizado.
+
+\subsection{Treinamento na base de \citeonline{xu2019automatic}}
+\begin{table}[htb]
+\centering
+\caption{Resultados dos modelos treinados na base de \citeonline{xu2019automatic} testados em outras bases.}
+\label{tab:xu}
+\begin{tabular}{|l|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|}
+\hline
+\diagbox[]{Modelo\\utilizado}{Base\\testada} & \citeonline{zhang_base2018} & \citeonline{maguire2018sdnet2018} & \citeonline{zoubir2021crack} & União das três bases. \\ \hline \hline
+VGG16 sem TL & 66.67\% & 26.28\% & 43.10\% & 45.63\% \\ \hline
+VGG16 com TL & 97.15\% & 39.60\% & 72.43\% & 77.15\% \\ \hline
+Densenet & 96.04\% & 43.84\% & 79.33\% & 81.59\% \\ \hline
+Resnet & 96.58\% & 36.83\% & 70.54\% & 74.18\% \\ \hline
+\end{tabular}
+\fdadospesquisa
+\end{table}
+
+A partir dos resultados presentes na \autoref{tab:xu}, pode-se concluir que a base de \citeonline{xu2019automatic} não apresenta todas as características necessárias para que os modelos treinados nela sejam capazes de detectar com boa precisão imagens de fissuras.
+Vale ressaltar que essa base tem bons resultados apenas na base de \citeonline{zhang_base2018}, evidenciando que ambas as bases possuem características semelhantes e, portanto, podem complementar uma à outra para um melhor desempenho na detecção de fissuras em imagens.
+
+As médias de $F_{1}$-Score obtidas pelos modelos quando treinados na base de \citeonline{xu2019automatic} foram de 45,42\%, 71,58\%, 75,20\% e 69,53\%.
+Assim sendo, o modelo que obteve melhor desempenho foi o Densenet, seguido pelo VGG16 com transferência de aprendizado.
+
+
+\subsection{Treinamento na base 'Subconjunto 40k'}
+\begin{table}[htb]
+\centering
+\caption{Resultados dos modelos treinados na base 'Subconjunto 40k' testados em outras bases.}
+\label{tab:subs}
+\begin{tabular}{|l|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|}
+\hline
+\diagbox[width=8em]{Modelo\\utilizado}{Base\\testada} & \citeonline{zhang_base2018} & \citeonline{maguire2018sdnet2018} & \citeonline{zoubir2021crack} & \citeonline{xu2019automatic} & 69K imagens \\ \hline \hline
+VGG16 sem TL & 98.77\% & 0.00\% & 0.00\% & 71.31\% & 78.00\% \\ \hline
+VGG16 com TL & 99.97\% & 78.97\% & 97.85\% & 99.92\% & 94.96\% \\ \hline
+Densenet & 99.98\% & 85.39\% & 99.12\% & 99.92\% & 96.46\% \\ \hline
+Resnet & 99.95\% & 86.95\% & 98.83\% & 99.71\% & 96.78\% \\ \hline
+\end{tabular}
+\fdadospesquisa
+\end{table}
+
+Conforme já definido anteriormente, a base de dados 'Subconjunto 40k' é um conjunto balanceado de 40.000 imagens selecionadas aleatoriamente do conjunto total de imagens. 
+Ao usar modelos treinados nessa base para testes em outras bases, foi necessário ter cuidado para não selecionar os mesmos dados usados para a validação cruzada nos testes. 
+Como 90\% das imagens foram usadas na validação cruzada, existem 36.000 imagens que não devem ser usadas nos testes. 
+Logo, ao remover as 36.000 imagens usadas na validação cruzada do total de 105.984 imagens, sobram
+69.984 imagens.
+Por esse motivo, a última coluna da \autoref{tab:subs} é denominada '69K imagens'. 
+
+Essa remoção de certas imagens das bases de dados gera uma variação na comparação do resultado presente na \autoref{tab:subs}, com os outros resultados.
+Entretanto, essa variação tem um impacto mínimo na comparação deste com outros resultados nesta seção, mas que deve ser mencionado.
+
+Os modelos quando treinados na base 'Subconjunto 40k', obtiveram ótimos resultados, como pode ser observado na \autoref{tab:subs}, onde a maioria dos resultados são valores de $F_{1}$-Score maiores que 90\%.
+O fato dessa base conter imagens de todas as bases faz com que apresente um maior número de características para serem abstraídas, e caso sejam, o modelo obterá uma maior capacidade de abstração.
+
+Conforme pode ser observado na \autoref{tab:subs}, os modelos treinados na base de dados 'Subconjunto 40k' obtiveram excelentes resultados, com a maioria dos valores de $F_{1}$-Score acima de 90\%. 
+Isso se deve ao fato de que essa base de dados contém imagens de todas as bases, o que proporciona um maior número de características a serem abstraídas pelo modelo.
+Caso o modelo utilizado consiga fazer a abstração desses dados, após seu treinamento, ele terá uma melhor capacidade de generalização para imagens de outras bases.
+
+Com base nos resultados obtidos até o momento, conclui-se que o método de treinamento mais eficaz foi o uso de um subconjunto que abrangesse todas as bases de dados. 
+No entanto, é importante ressaltar que foi necessário retirar um certo número de imagens de cada base para evitar a repetição de imagens no treinamento do modelo. 
+Embora essa exclusão possa ter um efeito mínimo, a diferença nos resultados obtidos nos testes de cada base é muito significativa, o que sugere que esse fator não influenciou significativamente os resultados finais.
+
+Além disso, em média, os modelos VGG16 sem transferência de aprendizado, VGG16 com transferência de aprendizado, Densenet e Resnet apresentaram valores de $F_{1}$-Score de 49,62\%, 94,33\%, 96,17\% e 96,44\%, respectivamente.
+Portanto, é possível afirmar que o modelo Resnet obteve o melhor desempenho, demonstrando uma maior capacidade de abstração e generalização de dados em comparação aos outros modelos avaliados.

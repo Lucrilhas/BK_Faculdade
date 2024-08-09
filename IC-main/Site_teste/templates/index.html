@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Teste site com Flask - Predição</h1>
+    <h2>Por arquivo</h2>
+    <form method='POST' enctype='multipart/form-data'>
+        {{form.hidden_tag()}}
+        {{form.file()}}
+        {{form.submit()}}
+    </form>
+    <h2>Por texto</h2>
+    <form action="resultado_por_texto" method = "POST">
+        <p>Cimento <input type = "text" name = "Cimento_txt" /></p>
+        <p>Adições <input type = "text" name = "Adicoes_txt" /></p>
+        <p>Agua/Cimento <input type = "text" name = "ac_txt" /></p>
+        <p>Agregado Fino <input type = "text" name = "af_txt" /></p>
+        <p>Agregado Grosso <input type = "text" name = "ag_txt" /></p>
+        <p>Idade <input type = "text" name = "id_txt" /></p>
+        <p><input type = "submit" value = "Enviar" /></p>
+    </form>
+
+</body>
+</html>

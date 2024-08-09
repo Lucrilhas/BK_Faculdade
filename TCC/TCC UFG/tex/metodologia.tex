@@ -1,0 +1,286 @@
+\section{Considerações iniciais}
+Neste capítulo apresenta a metodologia utilizada para execução deste trabalho, desde escolha de base de dados, montagem e escolha das arquiteturas de CNN`s, até o método de treinamento e métricas para avaliação.
+
+\section{Base de dados}
+A partir da recomendação de \citeonline{zoubir2021crack}, foram selecionados as bases de \citeonline{zhang_base2018}; \citeonline{maguire2018sdnet2018}, chamada de SDNET2018; \citeonline{zoubir2021crack} e \citeonline{xu2019automatic}.
+
+\subsection{Obtenção e especificidades das bases}
+\label{sub:bases}
+
+As bases utilizadas foram encontradas e baixadas da Internet, a partir de seus artigos. 
+Todas as bases são rotuladas para classificação, com imagens divididas em dois rótulos. 
+Embora as bases usem diferentes nomes para os rótulos, elas podem ser renomeadas e reorganizadas como "positivo" para imagens com fissuras e "negativo" para imagens sem fissuras sem que altere o significado.
+
+A base elaborada por \citeonline{zhang_base2018} é composta por um total de 40.000 imagens de resolução $227 \times 227$, as quais foram divididas em 20.000 positivas e 20.000 negativas.
+As imagens foram tiradas em construções do campus \sigla{METU}{Middle East Technical University} utilizando um \textit{smartphone}, obtendo 458 imagens de alta resolução ($4032 \times 3024$).
+Fora a divisão e rotulação, não acontece  nenhum processamento de \textit{data augmentation}.
+Por fim, as imagens apresentam diferentes condições de iluminação e texturas.
+
+SDNET2018 é um conjunto de dados de imagens rotuladas de uso para algoritmos de detecção de fissuras em concreto baseados em inteligência artificial \cite{maguire2018sdnet2018}.
+Este conjunto contém mais de 56.000 imagens de decks de pontes, paredes e pavimentos de concreto com e sem fissuras, com fissuras tão estreitas quanto 0,06 mm e tão largas quanto 25 mm. 
+Além disso, o conjunto de dados inclui imagens com várias obstruções, como sombras, aspereza superficial, escalonamento, bordas, buracos e detritos de fundo.
+
+Seus criadores, \citeonline{maguire2018sdnet2018}, capturaram 230 imagens de superfícies de concreto trincadas e não trincadas (54 decks de pontes, 72 paredes, 104 pavimentos) usando uma câmera digital Nikon de 16 MP. 
+As superfícies foram localizadas no sistema de laboratório \sigla{SMASH}{\textit{Utah State University system, material, and structural health}} e nas estradas e calçadas do campus da universidade. 
+Cada imagem foi segmentada em sub-imagens de $256 \times 256$ pixels.
+
+O artigo de \citeonline{zoubir2021crack} é o que recomenda as outras bases de dados, no entanto, a metodologia empregada consiste em utilizar uma base de dados própria do autor.
+Para tal, foram coletadas 572 imagens de resolução $5152 \times 3864$ de plataformas e pilares de concreto com fissuras, sendo que para melhorar a diversidade do conjunto de dados proposto as imagens apresentam diferentes condições de iluminação e superfície como: Rugosidade, cor, umidade e luz forte. 
+As imagens são então recortadas em 1304 imagens fissuradas e 5634 não fissuradas.
+Porém, apenas 1.050 imagens fissuradas e 2.772 não fissuradas são disponibilizadas para \textit{download}.
+
+Diferentes tipos e tamanhos de fissuras estão presentes nas imagens. 
+Além disso, o conjunto de dados apresenta alterações de superfície desafiadoras, tais como manchas e marcas. 
+É importante mencionar que algumas imagens que não possuem fissuras contêm juntas de concreto, que podem ser confundidas com fissuras durante a classificação, e ainda podem ser encontrados pequenos defeitos.
+
+Já o artigo de \citeonline{xu2019automatic}, utiliza a base de dados proposta por \citeonline{LiLiangBase} aplicando \textit{data augmentation}.
+A base original é composta por 2.068 imagens de imagens de fissuras, coletadas pela câmera \textit{Phantom 4 Pro's CMOS} com resolução de $1024 \times 1024$.
+
+Por conta da base original possuir apenas imagens com fissuras, \citeonline{xu2019automatic} relata que foi necessário recortar as imagens originais em quatro imagens de $512 \times 512$, assim obtendo 8.272 imagens.
+Em seguida, foi necessário remover as imagens que não apresentavam condições adequadas para o processamento por estarem borradas. 
+Por fim, é utilizado a operação corte central aleatório para reduzir as imagens para a resolução $224 \times 224$ e escolhido imagens de forma aleatória para rotacionar.
+
+Assim, resultando em 6.069 imagens, sendo 4058 imagens fissuradas e 2011 imagens não fissuradas.
+Entretanto, ao fazer o \textit{download} da base e organizá-la pelas instruções do autor, há uma incoerência por conta de haver 6.070 imagens, sendo essas 4.056 imagens com fissuras e 2.014 imagens sem fissuras.
+Porém, como no arquivo baixado consta as classes de todas as imagens, é considerado como uma adição posterior ao artigo.
+
+A \autoref{tab:bases_dados} apresenta algumas das características principais sobre as bases citadas.
+Sendo essas características a quantidade de imagens, sua divisão por rótulo e sua resolução em pixels.
+
+
+\begin{table}[htb]
+\centering
+\caption{Bases de dados}
+\label{tab:bases_dados}
+\begin{tabularx}{\textwidth}{l|c|c|c|c} \hline
+Base de dados & Fissuradas & Saudáveis & Total & Dimensões \\ \hline
+\citeonline{zhang_base2018}         & 20.000    & 20.000    & 40.000 & $227 \times 227$ \\
+SDNET2018   & 8.484   & 47.608     & 56.092 & $256 \times 256$ \\
+\citeonline{zoubir2021crack}        &  1.050    & 2.772     & 3.822 & $200 \times 200$ \\
+\citeonline{xu2019automatic}        & 4.056     & 2.014     & 6.070 & $224 \times 224$ \\ \hline
+Total:                              & 33.590    & 72.394   & 105.984 & - \\ \hline
+\end{tabularx}
+\fdadospesquisa
+\end{table}
+
+\subsection{União das bases}
+\label{subchap:uniao}
+
+Acredita-se que, além da realização de experimentos individuais para cada base de dados, conduzir um experimento adicional com a fusão dessas bases poderá gerar resultados mais consistentes, devido à maior diversidade de características combinadas.
+
+Entretanto, apenas com uma breve análise da \autoref{tab:bases_dados}, é possível perceber alguns problemas no escopo da união dessas bases. 
+Primeiro que cada base apresenta imagens de dimensões diferentes sendo que uma rede neural convolucional consegue aceitar como entrada apenas imagens com uma dimensão fixa. 
+Outro problema é o desbalanceamento de classes que ocorre já que há mais que o dobro de imagens saudáveis do que há de fissuradas.
+
+\section{Pré-processamento}
+
+Os processamentos prévios realizados são justamente para solucionar os problemas para a união das bases, citados anteriormente.
+Sendo respectivamente: Redimensionar essas imagens para uma dimensão em comum \cite{thakur2022}, e selecionar apenas uma amostra balanceada da base de dados, já que nesse caso há um alto desbalanceamento
+
+Por conta disso, os experimentos adicionais com a fusão das bases comentada na \autoref{subchap:uniao} será feito com um subconjunto de todas as 105.984 imagens.
+Para isso, utilizaremos um subconjunto aleatório de 40.000 imagens selecionadas a partir do total de 105.984 imagens. 
+Esse subconjunto será referido como 'Subconjunto 40k' e será composto por 20.000 imagens pertencentes à classe "Fissuradas" e 20.000 imagens pertencentes à classe "Saudáveis".
+Logo, esta monografia apresenta um total de cinco bases de dados.
+
+Dando continuidade aos processamentos realizados, durante a leitura dos lotes de imagens, ocorre a normalização dos valores, que envolve a transformação dos valores das três camadas das imagens, que normalmente variam de 0 a 255, em valores de ponto flutuante entre 0 e 1.
+Além disso, por conta das redes neurais precisarem de um tamanho de entrada fixo, todas as imagens foram reduzidas para o tamanho $200 \times 200$ pixels durante a leitura dos lotes.
+Fora esses, não há necessidade de realizar outros pré-processamentos nas bases uma vez que as imagens já foram tratadas, recortadas e rotuladas \cite{great_preprocess2022}.
+
+Caso fosse necessário aumentar a quantidade de imagens, vale citar processos de \textit{data augmentation}, como rotação, alteração de brilho, correção de gama, entre outros. 
+Porém não se viu necessário por já se ter uma base de dados robusta, com grande quantidade de imagens e que apresenta diferentes características e variações da classe alvo.
+
+\section{Arquiteturas}
+As arquiteturas de rede neural convolucional escolhidas para serem testadas são VGG16 \cite{simonyan2014very}, 
+% Inception v3 \cite{szegedy2015going}, 
+DenseNet \cite{huang2017densely} 
+e ResNet \cite{he2016deep}, por conta de seus resultados em trabalhos correlatos, já comentados na \autoref{dl:arquiteturas}. 
+
+A implementação destes se dá na linguagem Python 3 \cite{py3} através das bibliotecas Tensorflow \cite{tensorflow2015-whitepaper} e Keras \cite{chollet2015keras} que oferecem tais modelos já configurados, sendo necessário apenas a instanciação desses modelos e sua configuração inicial.
+
+No site do Keras \cite{chollet2015keras}, é possível encontrar informações sobre os modelos utilizados, incluindo acurácia \textit{Top}-1, acurácia \textit{Top}-5, quantidade de parâmetros, profundidade e custo de inferência na GPU em milissegundos. 
+Esses detalhes são apresentados na \autoref{tab:info_arq} para os modelos empregados.
+
+A acurácia \textit{Top}-1 e a acurácia \textit{Top}-5 referem-se à habilidade dos modelos de classificar imagens corretamente em um conjunto de validação pertencente ao conjunto de dados \textit{ImageNet}. 
+A acurácia \textit{Top}-1 mede se o modelo previu corretamente a classe mais provável entre todas as possíveis classes, enquanto a acurácia \textit{Top}-5 avalia se o modelo previu corretamente a classe correta entre as cinco mais prováveis.
+
+A profundidade do modelo se refere ao número de camadas que contêm parâmetros. 
+O custo de inferência é uma métrica que mede o tempo médio que um modelo de aprendizado de máquina leva para processar uma única amostra de entrada e produzir uma saída correspondente. 
+O custo de inferência na GPU é calculado considerando o uso de uma GPU Tesla A100 com um \textit{batch} de tamanho 32.
+
+\begin{table}[htb]
+\centering
+\caption{Informações das arquiteturas utilizadas}
+\label{tab:info_arq}
+\begin{tabularx}{\textwidth}{l|c|c|c|c|c} \hline
+Modelo & Acurácia \textit{Top}-1 & Acurácia \textit{Top}-5 & Parâmetros & Profundidade & Custo (ms)\\ \hline \hline
+VGG16 & 71.3\% & 90.1\% & 138.4 M & 16 & 6.6\\ \hline
+DenseNet201 & 77.3\% & 93.6\% & 20.2 M & 402 & 6.7\\ \hline
+ResNet152V2 & 78.0\% & 94,2\% & 60.4 M & 307 & 4.2\\ \hline
+\end{tabularx}
+\fdireta{chollet2015keras}
+\end{table}
+
+As arquiteturas VGG, Densenet e Resnet possuem diversas variações.
+Entretanto, nesta monografia foram utilizados o VGG16, DenseNet201 e ResNet152V2 em específico por apresentarem as maiores acurácias \textit{Top}-1 e \textit{Top}-5 de suas arquiteturas.
+
+
+\section{Método}
+
+Cada modelo de rede neural convolucional é treinado e testado em cada base.
+E posteriormente avaliada utilizando todas as bases como referência.
+O treinamento do modelo é realizado utilizando o método de validação cruzada estratificada \textit{K-fold}.
+
+\subsection{validação cruzada}
+
+A validação cruzada \textit{K-fold} funciona de modo a separar os dados de entrada em $k$ grupos de tamanhos semelhantes, e então executar $k$ iterações onde um desses grupos será escolhido para validar o modelo e o restante dos grupos servirão para o treinamento do modelo, sendo que a cada iteração é selecionado um grupo diferente para validação \cite{kohavi1995study}. 
+Já sua versão estratificada \textit{K-fold} distribui os dados de entrada igualando a quantidade das classes entre os grupos, dessa forma os grupos terão uma representação balanceada das classes, evitando vieses na avaliação do modelo \cite{geron2019hands}.
+
+\subsection{Divisão e aplicação das bases de dados}
+
+Para cada modelo, cada base de dados é dividida em 90\% e 10\% de forma a manter o balanceamento de cada classe.
+Sendo os 10\% reservados para avaliações, ou seja, para testes.
+Já os 90\% são utilizados como entrada para validação cruzada estratificada, utilizando 10 grupos ($k$ = 10).
+Por conta dessa divisão, pode se afirmar que 90\% desses 90\% serão utilizados para treinamento e os outros 10\% desses 90\% serão utilizados para validação, embora aconteça um rotacionamento desses dados.
+
+
+\subsection{Cálculo dos resultados do treino e validação}
+
+Para o treinamento dos modelos, é utilizado a função \textit{fit} da biblioteca Keras.
+Essa função permite escolher qual método de acurácia e de \textit{loss} será utilizada para calcular esses valores e retornar seus resultados durante a execução
+
+Antes de utilizar um modelo na validação cruzada estratificada, o estado inicial do modelo, incluindo seus parâmetros e pesos, é guardado. 
+Assim, ao iniciar cada grupo, o modelo é reiniciado para esse estado inicial. 
+E ao final da execução de cada grupo (treinamento e validação), o modelo é salvo na memória.
+Assim, no final da validação cruzada, terá salvo na memória $k$ modelos treinados.
+Essa abordagem garante que cada grupo tenha sempre um mesmo início e que informações de um grupo não passem para outros, já que o modelo é revertido para suas condições iniciais a cada novo grupo. 
+Dessa forma, o treinamento ou validação de um grupo não afeta o treinamento, ou o desempenho, dos outros grupos.
+
+Os resultados finais dessa etapa se dão em acurácia e \textit{loss} e embora sejam retornados valores de acurácia e \textit{loss} para tento treino quanto validação.
+Apenas os valores da validação são utilizados para a analise dos modelos.
+A acurácia retornada é o número de acertos sobre a quantidade total de imagens da validação.
+Esse conceito é melhor explicado na \autoref{sub:calcTreinTest}, e demonstrada na \autoref{eqn:acuracia}.
+Já a para o calculo do \textit{loss}, é utilizado a função de perda \textit{categorical cross entropy}, que é melhor explicado na \autoref{sub:cce}
+
+Por fim, a análise dos resultados da validação cruzada usam o resultado final de cada grupo.
+Estes são registrados em um conjunto para calcular a média, variância e desvio padrão do modelo para a base utilizada.
+A partir desses dados é possível obter uma estimativa mais confiável do desempenho do modelo em dados não vistos. 
+A média representa a estimativa pontual do desempenho do modelo, enquanto o desvio padrão representa a variabilidade dos resultados obtidos nos diferentes conjuntos de teste.
+A variação dos resultados obtidos em diferentes conjuntos de teste pode fornecer informações adicionais sobre a robustez do modelo.
+
+
+\subsection{categorical cross entropy}
+\label{sub:cce}
+A \textit{cross entropy} é uma medida comumente usada em problemas de classificação, e a \textit{categorical cross entropy} é uma adaptação da \textit{cross entropy} para o caso de múltiplas classes. 
+Ela é uma medida de dissimilaridade entre as distribuições de probabilidade, uma calculada pelo modelo e outra sendo a distribuição verdadeira das classes \cite{geeron2017handson}.
+
+A fórmula da \textit{categorical cross entropy} é simples, e pode ser observada em \autoref{eqn:cce}.
+Nela, temos $M$ como quantidade de classes; 
+$y$ como indicador binário (0 ou 1) que representa se a classe $c$ é a classificação correta para imagem $o$; 
+$p$ é a probabilidade prevista da imagem $o$ ser da classe $c$.
+
+
+\begin{equation}
+\label{eqn:cce}
+CCE = -\sum_{c=1}^My_{o,c}\log(p_{o,c})
+\end{equation}
+\fdireta{equacoesML}
+
+Se o problema de classificação envolver apenas duas classes, o \textit{categorical cross entropy} pode ser resumida para o \textit{\textit{binary cross entropy}}.
+Que pode ser observado em \autoref{eqn:cce2}, respeitando as mesmas variáveis citadas anteriormente.
+\begin{equation}
+\label{eqn:cce2}
+CCE_{M=2} = -{(y\log(p) + (1 - y)\log(1 - p))}
+\end{equation}
+\fdireta{equacoesML}
+
+
+O objetivo da otimização é minimizar a \textit{cross entropy} , ou seja, ajustar os parâmetros do modelo para que as predições fiquem o mais próximo possível das classes verdadeiras. 
+Isso é feito utilizando técnicas de otimização como o gradiente descendente \cite{Goodfellow2016}.
+
+\subsection{Cálculos da acurácia de treino e testes}
+\label{sub:calcTreinTest}
+
+Para minimizar o custo computacional, caso a validação cruzada produza resultados com baixo desvio padrão, é escolhido o grupo que apresentou o melhor desempenho para realizar os testes, em vez de treinar um novo modelo.
+Logo, o melhor modelo irá classificar os 10\% reservados para testes.
+Por fim, esse mesmo modelo irá classificar todas as imagens das outras bases e a união dessas outras base.
+Esses testes não são aplicados na base 'Subconjunto 40k', já que seria redundante e possivelmente prejudicial já que ela pode conter dados em que esse modelo foi treinado.
+
+Esses experimentos têm  o intuito de verificar se o modelo selecionado tem a capacidade de generalização dos dados.
+Ou seja, se realmente consegue classificar uma imagem se apresenta fissura de um modo abrangente, ou se é limitado à base treinada.
+Fundamentado nesses resultados, é possível analisar como o modelo se comportaria em experimentos mais diversificados.
+
+Esses testes seguem os métodos de avaliação recomendados em \citeonline{xu2019automatic}, onde os resultados obtidos são classificados nas seguintes categorias:
+
+\begin{itemize}
+\item \sigla{TP}{Verdadeiros positivos}: O número de classes positivas previstas corretamente como classes positivas. 
+Assim, TP se refere ao número de fissuras que são classificadas corretamente como fissuras.
+
+\item \sigla{TN}{Verdadeiros negativos}: O número de classes negativas previstas corretamente como classes negativas. 
+Logo, TN se refere ao número de superfícies saudáveis que são classificadas corretamente como superfícies saudáveis.
+
+\item \sigla{FP}{Falso positivos}: O número de classes negativas previstas incorretamente como classes positivas. 
+Portanto, FP se refere ao número de superfícies saudáveis que são incorretamente identificadas como fissuras.
+
+\item \sigla{FN}{Falso negativos}: O número de classes positivas previstas incorretamente como classes negativas. 
+Então, FN se refere ao número de fissuras que são incorretamente identificadas como superfícies saudáveis.
+\end{itemize}
+
+Com esse dados, é possível obter uma diversificada quantidade de informações \cite{geron2019hands}.
+Dentre elas, as utilizadas nesta monografia são:
+
+\begin{itemize}
+\item Acurácia: 
+Razão entre o número de instâncias classificadas corretamente e o número total de instâncias, representando a efetividade geral do classificador. 
+Para este caso, a acurácia se refere à proporção de fissuras e fundos que são classificados corretamente. Sua fórmula de cálculo é mostrada na \autoref{eqn:acuracia}:
+
+\begin{equation}
+\label{eqn:acuracia}
+Acc = \frac{TP + TN}{TP + TN + FP + FN}
+\end{equation}
+
+\item
+Precisão: 
+É a proporção de instâncias verdadeiramente positivas entre todas as instâncias classificadas como positivas. 
+No contexto desta monografia, a precisão se refere à proporção de verdadeiras fissuras em todas as instâncias classificadas como fissuras pelo modelo. 
+A fórmula de cálculo é mostrada na \autoref{eqn:precisao}:
+
+\begin{equation}
+\label{eqn:precisao}
+P = \frac{TP}{TP + FP}
+\end{equation}
+
+\item
+Sensibilidade (\textit{Recall}): 
+De todas as instâncias positivas, a sensibilidade determina qual porcentagem é identificada corretamente, representando a eficácia de um classificador para identificar instâncias positivas. 
+A sensibilidade corresponde à proporção de quantas verdadeiras fissuras são classificadas como fissuras. 
+A fórmula de cálculo da sensibilidade é mostrada na \autoref{eqn:recall}:
+
+\begin{equation}
+\label{eqn:recall}
+R = \frac{TP}{TP + FN}
+\end{equation}
+
+\item
+Especificidade: 
+Razão entre o número de instâncias negativas classificadas corretamente e o número total de instâncias negativas, representando a eficácia geral do classificador na identificação de instâncias negativas. 
+A especificidade em questão refere-se à proporção de fundos verdadeiros que são classificados como fundos. 
+Sua fórmula de cálculo é mostrada na \autoref{eqn:espec}:
+
+\begin{equation}
+\label{eqn:espec}
+E = \frac{TN}{TN + FP}
+\end{equation}
+
+
+\item
+\textit{$F_{1}$-Score}: É uma métrica especialmente útil em casos em que as classes positiva e negativa possuem números desproporcionais de instâncias ou quando a taxa de falsos positivos é considerada mais prejudicial que a taxa de falsos negativos.
+Essa medida é calculada a partir da combinação da precisão (P) e do \textit{recall} (R) do modelo, o que permite avaliar tanto a capacidade de um modelo em classificar corretamente as instâncias positivas quanto a sua habilidade em evitar falsos positivos.
+Logo, um modelo experimental é comprovadamente mais eficaz quando o $F_{1}$-Score é mais elevado \cite{geron2019hands}.
+Sua fórmula de cálculo é mostrada na \autoref{eqn:f1}:
+
+\begin{equation}
+\label{eqn:f1}
+F1 = \frac{2*P*R}{P+R} = \frac{2*TP}{2*TP+FP+FN}
+\end{equation}
+
+\end{itemize}

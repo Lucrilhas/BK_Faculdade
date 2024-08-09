@@ -1,0 +1,24 @@
+Linguagem L = a^n b^n | n >= 0
+{
+    "transicoes":[
+        q0, q0, a, Z, AZ
+        q0, q0, a, A, AA
+        q0, q1, b, A, E
+        q0, q1, E, Z, Z
+        q1, q1, b, A, E
+        q1, qf, E, Z, Z
+    ]
+    "pilha_inicial": Z
+    "estado_inicial": q0
+    "estados_final":[
+        qf
+    ]
+    "palavras":[
+
+        a,b
+        a,a,b,b
+        a,a,a,b,b,b
+        a,b,b
+        a,a,b
+    ]
+}

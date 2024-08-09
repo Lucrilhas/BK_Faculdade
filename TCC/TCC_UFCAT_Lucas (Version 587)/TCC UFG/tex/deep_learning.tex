@@ -1,0 +1,183 @@
+\section{Considerações iniciais}
+
+Deep learning, ou aprendizado reforçado em português, é um ramo do aprendizado de máquina que por sua vez é uma das áreas de estudo nas ciências de inteligencia artificial. Segundo \citeonline{Simon2013od} o aprendizado de máquina tem um foco maior em algoritmos de computação que possuem a capacidade de aprenderem e se aprimorarem, sem a necessidade de uma programação expressa.
+A partir disso, o deep learning tenta alcançar esse ato de educar-se a partir de repetidas iterações dentro de uma ambiente correspondente à um objetivo em particular, dessa forma encontrando um resultado para tal objetivo através de reflexões de seus erros em novas tentativas.
+
+Nesse capítulo busca-se introduzir os conhecimentos e aplicações do deep learning:
+
+LEMBRAR DE FALAR DE FUNÇÃO DE ATIVAÇÃO
+POOLING
+SOFTMAX
+DROPOUT
+Adam optimizer
+
+\section{Machine learning}
+
+O aprendizado de máquina, do inglês machine learning, faz parte da área de estudo da inteligencia artificial, em especifico as aplicações que buscam emitir um ótimo resultado com base em alguma entrada, sendo que esse resultado é fruto de um processamento realizado por maquinas de forma que há um aprendizado onde se busca uma melhora desse resultado até que se encontre tal resultado ótimo, porém o fator mais importante de tal tecnologia é que tal aprendizagem seja feito apenas pela máquina, no máximo com um auxilio ou supervisão humana \citeonline{ed2021}.
+
+Um dos principais exemplos da aplicação de aprendizado de máquina são os motores de busca da internet como Google, que a partir de buscas anteriores, consegue descobrir quais sites são mais relevantes e com isso recomenda-los mais. 
+Outro grande exemplo são os gerenciadores de e-mails eletrônicos como Gmail ou Outlook, que a partir de analise da estrutura dos e-mails e de seu conteúdo categoriza os e-mails recebido como spam, lixo, promoção ou social. 
+Á vista disso, pode se definir o machine learning como algoritmos que buscam ter uma maior acurácia em suas predições \cite{ed2021}.
+
+Para ambos os exemplos apresentados, existem diversos caminhos dentro do machine learning que o programador pode seguir para implementar o machine learning e obter uma boa acurácia. Atualmente pode se dividir tais caminhos em quatro diferentes métodos: Aprendizagem supervisionado, aprendizagem não supervisionado, aprendizagem semi-supervisionado e aprendizagem por reforço \cite{Russell2009}.
+
+O aprendizado supervisionado se refere aos casos onde há um programador ou cientista de dados que ativamente que fornece o algoritmo de machine learning com dados de treino já rotulados e definem quais serão as variáveis esperadas de resultado, dessa forma o algoritmo já tem desde o início sua entrada e saída pré-estabelecida e precisa aprender a partir disso \cite{Russell2009}. 
+Exemplos desse método são algoritmos de regressão e classificação.
+
+No aprendizado não supervisionado acontece o inverso do primeiro tipo, o algoritmo não tem nenhum auxilio, não há nenhum rotulo em suas entrada e não é especificado que tipo de saída é esperado, com isso o algoritmo se vê obrigado a aprender a relacionar os dados e como eles fazer parte de uma correlação, nessa abordagem pode se dizer que o algoritmo é mais livre para pensar de diferentes maneiras, porém geralmente isso vem ao custo de uma maior custo computacional e de tempo, além de uma maior incerteza que o resultado terá uma boa acurácia \cite{ed2021}. 
+Exemplos desse tipo são clustering e grande parte de deep learning, incluindo redes neurais.
+
+Já no aprendizado semi-supervisionado, há uma misturas de ambos aprendizados anteriores, onde se busca deixar o algoritmo com a maior liberdade possível, mas com os dados de entrada rotulados \cite{ed2021}.
+Esse é o tipo mais incomum e alguns dos seu exemplos são algoritmos de tradução e de rotulação.
+
+Para finalizar, o aprendizado por reforço é usado para que a máquina aprenda a partir de respostas dadas pelo cientista de dados, dessa forma o algoritmo elabora um resultado e o cientista de dados responde o algoritmo se aquele resultado foi bom ou não, a partir de diversas iterações o algoritmo irá analisar quais métodos de pensamento geralmente levam a um bom resultado e então começará a usa-los de forma mais predominante \cite{Van_Otterlo2012}.
+Exemplos desse tipo são robôs autômatos para execução de tarefas, como jogar um jogo ou gerenciamento de recursos.
+
+A maior desvantagem do aprendizagem de máquina é que, pelo menos atualmente, é impossível preparar um algoritmo para qualquer evento, e que mesmo um algoritmo seja ótimo ou melhor que isso é muito improvável que chegue até uma acurácia de 100\%, e um grande exemplo disso é a aplicação de aprendizagem de maquina para implementação de algoritmos capazes de dirigir um carro no transito, pois não há como prever todas as eventualidades possíveis do transito, e qualquer acidente, por menor que seja pode ser fatal \cite{ed2021}.
+
+
+\section{Redes neurais artificiais}
+
+Assim como já introduzido previamente, as redes neurais artificiais, ou apenas redes neurais, são um método de aprendizado de máquina que tem inspiração no aprendizado de seres, embora tal área seja dona de muitos mistérios, como por exemplo, não se sabe ao certo como acontece o aprendizado, porém há como deduzir técnicas que levam ao ato de aprender, como ler um livro ou aprender através de erros. Tais técnicas ainda não funcionam bem em máquinas, então na verdade o que as redes neurais herdam dos seres pensantes é a arquitetura do órgão responsável pelo pensamento, ou seja o cérebro.
+
+Sabe-se que o cérebro é composto por células chamadas neurônios que se estendem por todo o corpo através do sistema nervoso, os neurônios por si só não são capazes de muita coisa, porém quando existem vários são capazes de compartilhar informações através das chamadas sinapses. 
+A partir de observações feitas notou-se que após adquirir conhecimento, as sinapses acontecem de forma diferente, com mais força ou peso, dessa forma se deduz que o ato de adquirir conhecimento acontece com a modificação dos pesos das sinapses \cite{Haykin1998}.
+
+A partir desses conhecimentos, para simular um conjunto de neurônios se implementa uma rede neural, onde há uma função das entradas cujo resultado são propagados para os neurônios seguintes que possui outra função e assim por seguinte nos chamados neurônios intermediários até chegar nos neurônios de resposta que são os finais.
+Entre um neurônio e outro existe um certo peso que irá de algum modo modificar o valor ou a informação durante a passagem de tal dado de um neurônio para outros, logo, se espera que modificar tais pesos irá fazer com que a rede neural aprenda e retorne uma resposta conclusiva \cite{lecun2015deep}. Para tal é realizado diversos períodos ou épocas de treinamento para que se possa calibrar o peso ideal, durante tais épocas os pesos devem ser alterado com muita cautela e utilizando fundamentos da matemática.
+
+Espera-se que após um número suficiente de épocas de treinamento, a rede neural se torne proficiente em tal tarefa, com uma precisão aceitável sendo capaz de realizar acertos com dados fora da base de treinamento \cite{Aggarwal2018}.
+
+\subsection{Feed-Forward Propagation}
+
+Propagação para a frente, ou Feed-Forward Propagation, é o tipo de propagação padrão no descobrimento dos parâmetros certos para o processo de aprendizagem de uma rede neural, nesse modelo, o dado de entrada sempre segue em direção à ultima camada \cite{vikashraj2019}, 
+ou seja o dados são inseridos na camada inicial e a partir do treino realizado são calculados novo parâmetros da rede neural, após os cálculos da camada inicial os dados seguem para a próxima camada intermediaria onde acontece o mesmo processo de calculo de parâmetros, esse procedimento acontece até que aconteça dos cálculos da camada final.
+
+Segundo \citeonline{Zell2007} o Feed-Forward Propagation é qualquer configuração de rede neural que não há conexões entre neurônios que resultem em um circuito, ou ciclo, dessa forma podendo ser considerado o tipo mais simples de rede neural, onde a informação percorre a rede neural em um sentido apenas.
+
+O processo que acontece no Feed-Forward Propagation pode ser resumido em duas etapas \cite{vikashraj2019}, onde ambas ocorrem em cada neurônio nas camadas intermediarias e na final:
+
+A primeira etapa é a de pré-ativação, onde há uma soma ponderada das entradas, a partir disso se constrói uma transformação linear dos possíveis neurônios. Baseado no resultado desse calculo e na função de ativação os neurônios decidem caso o dado deve ser propagado ou não.
+
+A segunda etapa é de ativação, que acontece quando o calculo da soma ponderada é passada para a função de ativação. A função de ativação é uma função matemática que incorpora tipos não lineares à rede neural. Os tipos mais comuns de função de ativação usados são as funções sigmoide, hiperbólico, tangente, \sigla{ReLU}{retificador} e Softmax.
+
+\subsection{Backward propagation}
+
+Propagação para trás, ou Backward Propagation é um dos principais aspectos do treino de redes neurais, sendo o algoritmo de aprimoramento dos pesos de uma rede neural com base na taxa de erro atingida pela última iteração, ou época. Esse aprimoramento permite o decremento da taxa de erro, fazendo com que sua precisão aumente geralmente \cite{Anas2019}.
+
+Segundo \citeonline{brilliant_back}, a implementação do backward propagation é feita através do gradiente descendente aplicada em uma função de erro, seu algoritmo calcula o gradiente da função de erro de acordo com os pesos da rede neural seguindo uma ordem inversa, com a camada final sendo a primeira à ser calculada e a camada inicial por último, sendo que para cada camada subsequente são utilizados os gradientes das camadas antecedentes.
+
+
+
+\section{Deep learning}
+
+De acordo com \citeonline{lecun2015deep}, o deep learning permite que modelos computacionais aprendam, a partir de varias camadas de processamento, à interpretar variados níveis de abstração.
+Tais métodos conseguiram evoluir de forma considerável o estado da arte em diversas áreas, como detecção de imagens e compreensão de linguagem natural, sendo que a tecnologia mais atual. 
+
+A principal característica  do deep learning e que o faz se integrar à classe de aprendizado não supervisionado é que não é necessário a realização de um pré-processamento, normalmente esses algoritmos conseguem utilizar como entradas dados sem uma estrutura fixa, como imagens e textos \cite{ibm2020}.
+O algoritmo de deep learning é capaz de abstrair diferentes características de suas entradas, a partir disso são realizados diferentes iterações onde será processado o quanto aquela característica, ou sua ausência, se faz importante para obter uma acurácia alta.
+
+
+O deep learning tem como inspiração para seu aprendizado de máquina, o que faz nós humanos aprender, ou pensar, que são os neurônios e como eles se relacionam uns com os outros, por conseguinte a sua estrutura é a chamada rede neural \cite{lecun2015deep}, onde existem várias camadas de processamento e para cada uma existem um certo número de neurônios.
+Cada neurônio se comunica com todos os neurônios da próxima camada, sendo que a primeira camada é a camada de entrada no algoritmo e a última camada é a camada de saída, e todo o processamento é realizado nas camadas intermediarias. 
+Seguindo essa lógica, cada comunicação se estabelece através de um calculo e um peso, com isso o que o deep learning faz para aprender, é mudar esses pesos pra mudar o resultado final. 
+
+Durante o processamento do deep learning o algoritmo realiza variados testes, buscando a arquitetura de rede neural ideal, modificando o número de camadas intermediarias, a quantidade de neurônios por camadas e o peso entre eles, porém é bem comum que os próprios supervisores do algoritmo realizem testes com estruturas pré definidas para acelerar o processo e estabelecer que tipo de processamento cada camada irá representar ou que tipo de característica será explorada \cite{Bengio2013}.
+
+Algumas das principais utilizações do deep learning são feitas através de dois modelos de algoritmos, \sigla{CNN}{Convolutional Neural Network} e \sigla{RNN}{Recurrent neural network}. As CNN`s são utilizadas principalmente em visão computacional e classificação de imagens, o que será melhora abordado no próximo capitulo. Já as RNN`s são redes neurais que formam grafos que representam uma sequencia temporal, fazendo com que se externe a dinamicidade da ação do tempo sobre os dados \cite{Abiodun2018}.
+
+\section{CNN}
+
+Explicar CNN
+
+\subsection{Arquitetura AlexNet}
+
+% Contextualização do modelo AlexNEt
+AlexNet  \cite{alexnetAnalyticsVidhya2021} é uma arquitetura premiada pela competição \textit{ImageNet} de 2012, popularizando a utilização de camadas de convolução cada vez mais profundas, uma de suas principais características e que o tornava um modelo com ótimas performances as custa de um considerável aumento no custo computacional \cite{krizhevsky2017imagenet}. 
+O modelo conta com oito camadas com cerca de 63 milhões de parâmetros com capacidade de aprendizado, separados em cinco camadas de convolução e três camadas totalmente conectadas onde são utilizados \textit{pooling} e \textit{dropout}, nas saídas de suas camadas é utilizado a função de ativação Relu, exceto na saída final, onde se utiliza da função de ativação \textit{Softmax} \cite{alexnetAnalyticsVidhya2021}.
+
+% Trabalho Correlato que utiliza AlexNEt
+Em seu trabalho, \citeonline{kim2018automated} vê a necessidade da aplicação de métodos de \textit{Deep Learning} aplicados na detecção de fissuras em imagens de superfícies de estruturas, segundo ele a escolha se dá principalmente por conta da capacidade do \textit{Deep Learning} em superar dificuldades encontradas em experimentos ao ar livre, como a mudança de iluminação.
+Para alcançar tal objetivo, \citeonline{kim2018automated} busca inicialmente a criação de um banco de dados, tal é utilizado a ferramenta \textit{ScrapeBox} para realizar uma busca pela internet e coletar imagens a partir de uma palavra-chave, após essa coleta se formou uma base de dados de cerca de 7,000 imagens, que após um pré-processamento e divisão se tornou 50,000 imagens, sendo separado 10,000 imagens em 5 classes: fissura, juntas (Poucas), juntas (Muitas), superfície saudável e presença de plantas. Isso ocorre pois o autor descreve que ter apenas dois classificadores (Com fissura e Sem fissura), resultam em muitos falsos positivos quando aplicados em imagens com muitos obstáculos, fazendo a acurácia subir de 32\% para 98\%.
+
+Como modelo computacional, foi escolhido a arquitetura AlexNet pelo fato de ser uma arquitetura bem difundida e que apresenta bons resultados em aplicações semelhantes. 
+Para o modelo de treinamento do modelo AlexNet, optou-se por realizar apenas o aperfeiçoamento com base nas novas classes a partir do modelo pré-treinado no banco de dados \textit{imagenet}, segundo o autor essa decisão leva em conta que treinar o modelo do início toma o tempo de uma semana mesmo em um computador de alto padrão, o que impossibilita realizar testagens rápidas com diferentes configurações. O modelo AlexNet utilizado consiste em cinco camadas de convolução seguidas por camadas de \textit{max-pooling} e três camadas totalmente conectadas com uma saída \textit{softmax} que corresponde a possibilidade de cada classe, além de possuir a função ReLU para diminuir o efeito de gradiente em seus neurônios.
+
+Como último estagio de processamento, é desenvolvido um método que cria um especie de janela deslizante de tamanha bem menor que a imagem original, essa janela irá percorrer a imagem original e aplicar o segmento da janela como entrada no modelo, dessa forma obtendo probabilidades para cada pedaço da imagem para que possa ter um calculo de correlação entre as porcentagens e diminuir o erro, além de detectar a posição das rachaduras com maior exatidão.
+
+Durante o treino, houve a separação da base de dados em 80\% para treino e 20\% para teste e ocorreu em 60 épocas, o que levou 316 minutos, lembrando que isso sobre o modelo pré-treinado. O resultado foi que já na época 8 houve uma acurácia de 98\% e 99\% na época 22 que se manteve nesse faixa até o final da validação.
+
+Para avaliar o modelo, o autor foi até ambientes de construção e capturou imagens utilizando câmera do celular e drones para aplicar o modelo já totalmente treinado e compara-lo com o resultado feito manualmente pelo autor, vale notar que essas imagens contém diversos obstáculos como canos, moldes, entre outros. O resultado foi a presença de uma acurácia acima de 90\% para todos os testes, junto com uma média de 86\% de precisão.
+
+O autor considera o resultado excelente, porém aponta suas limitações em distinguir fissuras de objetos que são indistinguíveis apenas com visão e conclui o estudo com um teste em campo utilizando um drone e realizando uma detecção em tempo real que apresenta uma precisão de 88\% a nível de pixel e detectando 15 de 16 fissuras, embora ele explique que essa fissura não detectada realmente é bem fina e que a imagem capturada por drone é levemente borrada e atrapalhe na detecção do modelo.
+
+\subsection{Arquitetura DenseNet}
+
+% Contextualização do modelo DenseNet
+Redes convolucionais densamente conectadas, ou arquitetura DenseNet \cite{huang2017densely} é um modelo recente que promete ser o próximo passo no que diz respeito em aumentar a profundidade das redes convolucionais \cite{PabloDenseNet2018}. 
+Após a popularização do aumento da profundidade das camadas convolucionais por conta do modelo AlexNet \cite{krizhevsky2017imagenet} em 2012, houve um constante aumento na profundidade de diversos modelos chegando em números massivos, porém esse aumento no caminho que a informação precisa percorrer desde a camada inicial até a camada final se tornou tão grande que o dado pode ser deturpado e não se tornar nada \cite{PabloDenseNet2018}, além do custo computacional exorbitante. 
+Para contornar tais problemas, o DensetNet busca simplificar o modelo de conectividade entre as camadas enquanto garanta que o fluxo de informações não seja perturbado, dessa forma foi utilizado um modelo de reutilização dos extratores de características, realizando conexões que ligam todas camadas diretamente com todas as outras \cite{huang2017densely}. Por conta disso o modelo DenseNet precisa de menos parâmetros e elimina a necessidade de camadas redundantes. Se comparado com classificador de uma rede neural genérica que depende dos resultados da última camada de rede, o DenseNet consegue utilizar de forma mais inteligente os resultados já produzidos, obtendo um resultado melhor em performance e precisão.
+
+% Trabalho Correlato que utiliza DenseNet
+Os estudos propostos por \citeonline{qiao2021computer} implicam que há necessidade de evoluir os métodos atuais de monitoramento e manutenção de pontes, em especifico a detecção de fissuras em sua estrutura de concreto, sendo ferramentas como sensores demasiadamente caras, como alternativa é sugerido a utilização de visão computacional. 
+Ao comparar as possíveis ferramentas que podem ser aplicadas com visão computacional, se percebe que opções como processamento de imagem baseado em percolação, limiarização e detectores de bordas são escolhas populares, porém que falham quando se buscam uma maior automatização tendo em vista o ambiente efêmero em que são aplicadas.
+
+Ao buscar uma solução, o autor realiza uma busca dentro da área do \textit{Deep Learning}, explicando que essa área possui três características desejadas: Robustez, capacidade de aprendizado e automatização. 
+Robustez se refere a capacidade do modelo em extrair as características desejadas de uma imagem com estabilidade, capacidade de aprendizado, permitindo que o modelo aprenda a identificar as características que importantes para o problema específico e automatização diz respeito à capacidade do modelo conseguir operar sem ou quase sem auxilio humano.
+
+O modelo escolhido por \citeonline{qiao2021computer} é o DenseNet \cite{huang2017densely}, por conta de suas inovações no campo do \textit{Deep Learning}, e ainda fundamenta mencionando que a principal característica do DenseNet, que são as camadas totalmente conectadas utilizam menos largura de banda e diminuem a sobrecarga de armazenamento, todavia, que a principal vantagem do DenseNet é o decréscimo do custo computacional por camada na rede neural causado pela reaproveitamento de recursos dentro da rede, dessa forma permitindo que o DenseNet precise re-aprender menos características, consequentemente diminuindo consideravelmente a quantidade de parâmetros e cálculos, além de possuir uma ótima performance em fugir do \textit{overfitting}.
+
+Ainda não satisfeito, o autor argumenta que combinar \textit{Deep Learning} com outros algoritmos de processamento de imagem pode produzir melhores resultados, à vista disso sendo implementado o modulo EMA (\textit{Expectation-Maximization Attention}) baseado no algoritmo de maximização de expectativa (EM) \cite{li2019expectation}, aprimorando o resultado fazendo com que o DenseNet tenha mais atenção nas áreas mais danificadas. 
+Esse algoritmo é aplicado durante as últimas camadas de \textit{polling}, transformando a arquitetura em EMA-DenseNet
+
+Como base de dados, o autor utilizou a base de dados de \citeonline{yang2018automatic} que contém cerca de 800 imagens para validação, entretanto o autor não achou satisfatório realizar o treinamento a partir dessas imagens por conta de considerar inconsistente com os ambientes reais, dessa forma, o próprio autor fotografou pontes da região de Xuzhou, na China, resultando em 1800 imagens de fissuras e  2500 imagens com exposição de armadura.
+Para finalizar, as imagens foram recortadas em menores imagens, giradas e aprimoradas, além de denotar todas as fissuras a nível de pixel por escolha do autor de utilizar aprendizado supervisionado.
+
+O treinamento foi realizado através do algoritmo ADAM de otimização \cite{kingma2014adam} que otimiza certas variáveis de configuração gerando uma maior convergência de resultados. O método de avaliação escolhido foi de verificar através de quatro cálculos: 
+PA, que representa a proporção do número de pixels preditos sobre o total de pixels, 
+MPA utiliza de PA para calcular a proporção de pixels em cada classe que estão corretamente classificados para gerar uma média entre todas as classes, 
+MIoU é o calculo da média da proporção de \textit{cross over} em cada classe, 
+e por último o cálculo de precisão que é a porcentagem dos pixels corretamente classificados em relação à todos os pixels.
+
+Para demonstrar a capacidade do EMA-DenseNet, também são treinados as arquiteturas FCN \cite{yang2018automatic}, SegNet \cite{badrinarayanan2017segnet}, DeepLab v3+ \cite{chen2018encoder} e SDDNet \cite{choi2019sddnet}, para comparação. O treinamento  foi feito durante 20.000 iterações, onde já na iteração 2.000 já uma convergência muita rápida com MIoU chegando à um valor estável de 87.42\%. Segundo o autor o processo de treinamento já prova que o algoritmo é confiável e o modelo após as 20.000 iterações apresentam um MIoU, PA, MPA e precisão de 87.42\%, 97.58\%, 92.59\% e 81.97\% respectivamente. Com o resultado de todos os modelos é exibido que de todos os modelos, o EMA-DenseNet teve os melhores resultados em quase todos os quesitos, exceto em PA, onde o modelo FCN obteve 97.96\%.
+
+Como forma de testar os resultados obtidos, os próprios autores coletam uma base de dados com bem mais ruídos, e danos muito maiores, nesse caso foi apresentado um MIoU, PA, MPA e precisão de 79.87\%, 97.31\%, 86.35\% e 74.70\% respectivamente, e tendo as melhores resultados em comparado com os outros modelos por uma grande diferença em maioria.
+
+\subsection{Arquitetura VGG}
+% Contextualização do modelo VGG16
+o grupo de pesquisa VGG (\textit{Visual Geometry Group}) \cite{simonyan2014very}, foi vencedor na modalidade de classificação com localização no desafio \textit{ImageNet} de 2014 e tendo uma boa colocação na de apenas classificação, onde alcançou 92,7\% no teste de acurácia entre a base de dados do \textit{ImageNet}, constituída por 14 milhões de imagens divididas em 1000 classes \cite{ILSVRC15}. 
+A principal ideia proposta pelo grupo é a de usar filtros de convoluções muito menores, matrizes de tamanho 3x3 com o deslocamento de apenas um pixel por toda a rede neural, sendo bem menor que outros modelos padrões da época como AlexNet \cite{krizhevsky2017imagenet}, que utiliza matriz de convolução de tamanho 11x11 com deslocamento de 4 pixels.
+O funcionamento de tal ideia é de utilizar mais camadas para compensar o menor tamanho do filtro, contudo, já que no final de cada camada há uma função de ativação, há uma maior utilização de tal processo, fazendo com que a rede se torne mais descriminante e resultando também no aumento da convergência da rede.
+No que diz respeito ao custo computacional, mesmo com aumento na quantidade de camadas, a matriz 3x3 requer menos parâmetros no geral, logo, requer menor potência computacional\cite{GreatLearningVgg16}.
+
+A configuração dos modelos propostos é de utilizar blocos constituídos de um à três camadas de convolução com filtro de tamanho 3x3, seguidos por uma camada de \textit{max-pooling} de tamanho 2x2, a quantidade de blocos é variada durante o artigo original e finalizado utilizando camadas densas de convolução \cite{simonyan2014very}, porém a configuração que obteve o melhor resultado no desafio \textit{ImageNet} foi a de profundidade 16, deixando tal configuração conhecida como VGG16. Em específico, a VGG16 é constituída por dois blocos iniciais, cada um com duas camadas de convolução seguida pela camada de \textit{max-pooling}, em seguida três blocos intermediários, cada um com três camadas de convolução seguida pela camada de \textit{max-pooling} e para finalizar três camadas densas de convolução.
+
+% Trabalho Correlato que utiliza VGG16
+
+O artigo de \citeonline{gopalakrishnan2018crack} apresenta uma diferente técnica dos trabalho citados anteriormente aplicada em conjunto com a arquitetura VGG16. Segundo o autor, aprimorar as ferramentas dos engenheiros os auxiliará de forma a garantir melhores condições de realizar as auditorias sobre as infraestruturas civis, além de diminuir os custos de realizar tais processos frequentemente.
+Como solução, a principal ferramenta apresentada é a utilização de drones, que vem sendo cada vez mais populares em diversos ramos, desde aplicações em monitoramento pós desastres naturais até inspeções de construções, tendo um grande impacto por deixar tais atividades mais fáceis, seguras e com um ótimo custo-beneficio \cite{vidyadharan2017civil}.
+
+Nos anos recentes, até mesmo drones mais populares tem a capacidade de alta movimentação, sinal com grande espaço de cobertura e câmeras capazes de capturar imagens em alta definição com resolução suficiente para capturar até mesmo micro-fissuras sem precisar estar muito próximo da estrutura \cite{gopalakrishnan2018crack}. 
+Só com as imagens capturadas com drone já é possível para um engenheiro ter um laudo sobre as patologias que uma estrutura contém, servindo como uma ótima ferramenta, contudo, o autor vai além e propões a automatização desse processo aplicando algoritmos de \textit{deep learning}, em especifico utilizar redes neurais convolucionais por conta de diversos experimentos recentes que mostram sua grande efetividade em processar imagens e vídeos, ademais de usar como entrada dados sem processamento ou sem demarcação de dados.
+
+Uma grande dificuldade enfrentada por \citeonline{gopalakrishnan2018crack} é a falta de uma base robusta de imagens de fissuras estruturais, fazendo com que ele opta-se por um método mais barato e eficiente, que é a de utilizar modelos computacionais que já foram treinados em bases de dados massivas, como o \textit{ImageNet} e apenas realizar um aprimoramento em cima dos parâmetros desse modelo a partir das novas classes buscadas, no caso duas classes são utilizadas: com ou sem fissura. 
+Esse método foi possível utilizando o \textit{framework} Keras \cite{chollet2015keras} que realiza a implementação do modelo VGG16 com a opção de utilizar os parâmetros pré treinados com base no \textit{ImageNet}.
+
+Como base de dados utilizado, o autor realiza a captura de 130 imagens de estruturas de concreto, onde 80 destas apresenta fissuras.
+Essa captura é feita a partir de um drone de alta performance com uma câmera de alta definição, as imagens obtidas podem variar de acordo com a proximidade do drone à superfície e angulo da câmera no momento da captura, atribuindo mais flexibilidade para realizar várias iterações em uma mesma fissura \cite{gopalakrishnan2018crack}.
+
+Graças a rede VGG16 já estar pré treinada e já saber extrair características da imagem, o autor treina apenas o último classificador para as classes desejadas. 
+Diferentes classificadores são treinados também na base do \textit{ImageNet} e testados para ser usado em conjunto ao VGG16, tais modelos de classificadores são: Rede neural de uma camada e 256 neurônicos com otimizador ADAM \cite{kingma2014adam}, floresta aleatória de 300 árvores, floresta extremamente aleatória de 300 árvores, máquina de vetores de suporte do tipo linear, e regressão logística.
+Para finalizar essa camada é utilizado a função de ativação \textit{softmax} para gerar o resultado final.
+
+A base de dados foi dividida em 70\% treino, 10\% validação e 20\% teste, e com treino realizado ao longo de 50 iterações, o resultados dos testes foram análisados em acurácia, precisão, \textit{recall}, \textit{F1-score} e \textit{Cohen`s Kappa score}.
+Com toda a fase de treinamento e validação realizada, os testes mostram que o modelo VGG16 utilizando transferencia de aprendizado e o classificador final com uma rede neural de uma camada de 256 neurônio ou com regressão logistica apresentaram ótimos resultados, com a acurácia de 0.89, precisão de 0.91, \textit{recall} de 0.89, \textit{F1-score} de 0.89 e \textit{Cohen`s Kappa score} de 0.788.
+
+\subsection{Arquitetura Inception V3}
+% Contextualização do modelo Inception V3
+
+Inception v3 \cite{szegedy2015going} é modelo de localização, reconhecimento e classificação de imagem que atualmente alcança uma acurácia superior a 78,1\% na base de imagens do \textit{ImageNet}. A arquitetura procura aumentar a profundidade sem aumentar o número de parâmetros da rede para que não aconteça o estouro de gradiente, por conta disso o modelo conta com menos de 25 milhões de parâmetros separados em 42 camandas, que pode ser comparado com os 60 milhões em 8 camadas do AlexNet \cite{alexnetAnalyticsVidhya2021}.
+
+% Trabalho Correlato que utiliza Inception V3
+
+O artigo de \citeonline{zoubir2021crack}, apresenta uma comparação interessante entre modelos de redes neurais convolucionais.

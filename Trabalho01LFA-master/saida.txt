@@ -1,0 +1,286 @@
+{
+	Estados: ['s0', 's1', 's2']
+	Estado inicial: ['s0']
+	Estado final: ['s0']
+	Alfabeto: ['0', '1']
+	Regras de transição:[
+				0					1					
+		s0		['s0']				['s1']				
+		s1		['s2']				['s0']				
+		s2		['s1']				[]				
+	]
+	Palavras:[
+		['0']	->	O automato consegue ler essa palavra
+		['1', '0']	->	O automato NÃO consegue ler essa palavra
+		['0', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '2']	->	Essa palavra contém valores fora do alfabeto do automato
+		['0', '0', '0', '0']	->	O automato consegue ler essa palavra
+		['0', '1', '1', '0']	->	O automato consegue ler essa palavra
+		['1', '0', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '0', '0', '0', '1', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '1']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '0', '0', '0', '1', '0', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '0', '0', '0', '1', '0', '0', '1', '0', '1', '0', '1', '0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '0', '1', '0', '1', '0', '1', '1', '1', '1', '1']	->	O automato NÃO consegue ler essa palavra
+	]
+	Tipo: dfa
+}
+
+{
+	Estados: ['q0', 'q1', 'q2', 'q3']
+	Estado inicial: ['q0']
+	Estado final: ['q1']
+	Alfabeto: ['0', '1']
+	Regras de transição:[
+				0					1					
+		q0		['q2']				['q1']				
+		q1		['q3']				['q0']				
+		q2		['q0']				['q3']				
+		q3		['q1']				['q2']				
+	]
+	Palavras:[
+		['0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0']	->	O automato NÃO consegue ler essa palavra
+		['0', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '2']	->	Essa palavra contém valores fora do alfabeto do automato
+		['0', '0', '0', '0']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '1', '0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1']	->	O automato consegue ler essa palavra
+		['0', '1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '0', '0', '0', '1', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '1']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '0', '0', '0', '1', '0', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '0', '0', '0', '1', '0', '0', '1', '0', '1', '0', '1', '0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '0', '1', '0', '1', '0', '1', '1', '1', '1', '1']	->	O automato NÃO consegue ler essa palavra
+	]
+	Tipo: dfa
+}
+
+{
+	Estados: ['q0', 'q1', 'q2', 'q3']
+	Estado inicial: ['q0']
+	Estado final: ['q0']
+	Alfabeto: ['0', '1']
+	Regras de transição:[
+				0					1					
+		q0		['q2']				['q1']				
+		q1		['q3']				['q0']				
+		q2		['q3']				['q3']				
+		q3		['q1']				['q2']				
+	]
+	Palavras:[
+		['0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0']	->	O automato NÃO consegue ler essa palavra
+		['0', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '2']	->	Essa palavra contém valores fora do alfabeto do automato
+		['0', '0', '0', '0']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '1', '0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '0', '0', '0', '1', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '1']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '0', '0', '0', '1', '0', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '0', '0', '0', '1', '0', '0', '1', '0', '1', '0', '1', '0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '0', '1', '0', '1', '0', '1', '1', '1', '1', '1']	->	O automato consegue ler essa palavra
+	]
+	Tipo: dfa
+}
+
+{
+	Estados: ['q0', 'q1', 'q2']
+	Estado inicial: ['q0']
+	Estado final: ['q2']
+	Alfabeto: ['0', '1']
+	Regras de transição:[
+				0					1					
+		q0		['q0']				['q1']				
+		q1		['q1', 'q2']				['q1']				
+		q2		['q2']				['q1', 'q2']				
+	]
+	Palavras:[
+		['0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0']	->	O automato consegue ler essa palavra
+		['0', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '2']	->	Essa palavra contém valores fora do alfabeto do automato
+		['0', '0', '0', '0']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '1', '0']	->	O automato consegue ler essa palavra
+		['1', '0', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1']	->	O automato consegue ler essa palavra
+		['0', '1', '0', '1', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '0', '0', '0', '1', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '1']	->	O automato consegue ler essa palavra
+		['0', '1', '0', '0', '0', '1', '0', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '0', '0', '0', '1', '0', '0', '1', '0', '1', '0', '1', '0']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '0', '1', '0', '1', '0', '1', '1', '1', '1', '1']	->	O automato consegue ler essa palavra
+	]
+	Tipo: nfa
+}
+
+{
+	Estados: ['q0', 'q1']
+	Estado inicial: ['q0']
+	Estado final: ['q1']
+	Alfabeto: ['0', '1']
+	Regras de transição:[
+				0					1					
+		q0		['q0', 'q1']				['q1']				
+		q1		[]				['q0', 'q1']				
+	]
+	Palavras:[
+		['0']	->	O automato consegue ler essa palavra
+		['1', '0']	->	O automato NÃO consegue ler essa palavra
+		['0', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '2']	->	Essa palavra contém valores fora do alfabeto do automato
+		['0', '0', '0', '0']	->	O automato consegue ler essa palavra
+		['0', '1', '1', '0']	->	O automato consegue ler essa palavra
+		['1', '0', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '0', '1', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '0', '0', '0', '1', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '1']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '0', '0', '0', '1', '0', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '0', '0', '0', '1', '0', '0', '1', '0', '1', '0', '1', '0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '0', '1', '0', '1', '0', '1', '1', '1', '1', '1']	->	O automato NÃO consegue ler essa palavra
+	]
+	Tipo: nfa
+}
+
+{
+	Estados: ['q0', 'q1', 'q2', 'q3', 'q4']
+	Estado inicial: ['q0']
+	Estado final: ['q3', 'q4']
+	Alfabeto: ['0', '1']
+	Regras de transição:[
+				0					1					
+		q0		['q0', 'q1']				['q0']				
+		q1		['q2', 'q3']				['q4']				
+		q2		['q0', 'q2']				['q4']				
+		q3		[]				[]				
+		q4		[]				[]				
+	]
+	Palavras:[
+		['0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0']	->	O automato NÃO consegue ler essa palavra
+		['0', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '2']	->	Essa palavra contém valores fora do alfabeto do automato
+		['0', '0', '0', '0']	->	O automato consegue ler essa palavra
+		['0', '1', '1', '0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1']	->	O automato consegue ler essa palavra
+		['0', '1', '0', '1', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '0', '0', '0', '1', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '1']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '0', '0', '0', '1', '0', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '0', '0', '0', '1', '0', '0', '1', '0', '1', '0', '1', '0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '0', '1', '0', '1', '0', '1', '1', '1', '1', '1']	->	O automato NÃO consegue ler essa palavra
+	]
+	Tipo: nfa
+}
+
+{
+	Estados: ['q0', 'q1', 'q2', 'q3', 'q4']
+	Estado inicial: ['q0']
+	Estado final: ['q4']
+	Alfabeto: ['0', '1', 'E']
+	Regras de transição:[
+				0					1					E					
+		q0		[]				[]				['q1', 'q2']				
+		q1		['q3']				[]				[]				
+		q2		[]				['q3']				[]				
+		q3		[]				['q4']				[]				
+		q4		[]				[]				[]				
+	]
+	Palavras:[
+		['0']	->	O automato NÃO consegue ler essa palavra
+		['0', '1']	->	O automato consegue ler essa palavra
+		['1', '0']	->	O automato NÃO consegue ler essa palavra
+		['1', '1']	->	O automato consegue ler essa palavra
+		['0', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '2']	->	Essa palavra contém valores fora do alfabeto do automato
+	]
+	Tipo: e-nfa
+}
+
+{
+	Estados: ['q0', 'q1', 'q2']
+	Estado inicial: ['q0']
+	Estado final: ['q2']
+	Alfabeto: ['0', '1', '2', 'E']
+	Regras de transição:[
+				0					1					2					E					
+		q0		['q0']				[]				[]				['q1']				
+		q1		[]				['q1']				[]				['q2']				
+		q2		[]				[]				['q2']				[]				
+	]
+	Palavras:[
+		['0']	->	O automato consegue ler essa palavra
+		['1', '0']	->	O automato NÃO consegue ler essa palavra
+		['0', '0', '1']	->	O automato consegue ler essa palavra
+		['1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '2']	->	O automato NÃO consegue ler essa palavra
+		['0', '0', '0', '0']	->	O automato consegue ler essa palavra
+		['0', '1', '1', '0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '0', '0', '0', '1', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '1']	->	O automato NÃO consegue ler essa palavra
+		['0', '1', '0', '0', '0', '1', '0', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '1', '0', '1']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '0', '0', '0', '1', '0', '0', '1', '0', '1', '0', '1', '0']	->	O automato NÃO consegue ler essa palavra
+		['1', '0', '1', '0', '1', '0', '1', '0', '0', '1', '0', '1', '0', '1', '1', '1', '1', '1']	->	O automato NÃO consegue ler essa palavra
+	]
+	Tipo: e-nfa
+}
+
+{
+	Estados: ['q0', 'q1', 'q10', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9']
+	Estado inicial: ['q0']
+	Estado final: ['q10']
+	Alfabeto: ['E', 'a', 'b']
+	Regras de transição:[
+				E					a					b					
+		q0		['q1']				[]				[]				
+		q1		['q2', 'q4']				[]				[]				
+		q10		[]				[]				[]				
+		q2		[]				['q3']				[]				
+		q3		['q6']				[]				[]				
+		q4		[]				[]				['q5']				
+		q5		['q6']				[]				[]				
+		q6		['q1', 'q7']				[]				[]				
+		q7		[]				['q8']				[]				
+		q8		[]				[]				['q9']				
+		q9		[]				[]				['q10']				
+	]
+	Palavras:[
+		['a']	->	O automato NÃO consegue ler essa palavra
+		['b']	->	O automato NÃO consegue ler essa palavra
+		['a', 'a']	->	O automato NÃO consegue ler essa palavra
+		['a', 'b']	->	O automato NÃO consegue ler essa palavra
+		['b', 'a']	->	O automato NÃO consegue ler essa palavra
+		['b', 'b']	->	O automato NÃO consegue ler essa palavra
+		['a', 'a', 'b', 'b']	->	O automato consegue ler essa palavra
+		['b', 'a', 'b', 'b']	->	O automato consegue ler essa palavra
+		['a', 'a', 'a', 'b', 'b']	->	O automato consegue ler essa palavra
+		['b', 'a', 'a', 'b', 'b']	->	O automato consegue ler essa palavra
+	]
+	Tipo: e-nfa
+}
+

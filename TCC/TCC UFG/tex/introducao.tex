@@ -1,0 +1,93 @@
+% Contextualizar:
+O concreto é o material de construção mais utilizado, sendo considerado a segunda substância mais utilizada do mundo, perdendo apenas para água \cite{Gagg2014}, sua utilização se estende até as chamadas \sigla{OAE}{Obra de Arte Especiais}, estruturas cujo objetivo é a transposição de obstáculos, como pontes, avenidas, viadutos e túneis. 
+De acordo com o Departamento Nacional de Infraestrutura de Transportes (DNIT) (2006), \textit{apud} Mendes (2009), existem 73.000 quilômetros de rodovias pavimentadas e não pavimentadas do modal rodoviário brasileiro, contendo dentro dessas, aproximadamente 5.600 pontes. 
+Em 2011 um relatório do Tribunal de Contas da União (Relatório TC 003.134/2011-3) apontou em uma auditoria que o valor estimado das OAE's são da ordem 13 bilhões de reais e esses estão distribuídos em cerca de 4.500 pontes e viadutos na malha federal. Já em 2015 o DNIT contabilizou somente sob sua responsabilidade um total de 5.114 OAE’s.
+
+Para estudar tais estruturas de concreto, em específico suas condições referentes à durabilidade e ampliação de vida útil, foi desenvolvido um campo chamado de \sigla{SHM}{Structural Health Monitoring} \cite{de2011durabiliidade}.
+O SHM utiliza principalmente de técnicas computacionais que tem como objetivo avaliar o comportamento real da estrutura e avaliar a sua qualidade como produto de engenharia. 
+Essas técnicas tem como objetivo principal informar o estado real em que a estrutura se encontra \cite{inaudi2009structural}.
+
+
+\section{Problema}
+
+Aplicações do SHM dentro do Brasil são especificadas em normas, como a norma NBR 15575, que é utilizada para verificação de durabilidade para sistemas estruturais de edificações habitacionais.
+Normas como essa são necessárias pois por melhor que seja o concreto, atualmente ainda é comum que se manifestem patologias, como fissuras (rachaduras e buracos) ou exposição da sustentação metálica da estruturas (armadura da estrutura), sejam causadas por ações naturais ou por erro humano em sua criação \cite{afonso2021}. 
+Dessa forma é de suma importância que ocorra um monitoramento constante das estruturas no geral, até mesmo das que são consideradas saudáveis \cite{statera}.
+
+Por via de regra espera-se que empresas tenham uma equipe específica responsável pelo monitoramento constante de tais estruturas \cite{statera}.
+Essa responsabilidade é de alto custo operacional, logo, é sugerido substituir o custo humano por técnicas computacionais que constam no SHM \cite{Liu2002}.
+
+Dentre essas tecnologias, destacam-se a utilização de sensores e heurísticas aplicadas em visão computacional. 
+Todavia, essas tecnologias possuem certas desvantagens que desencorajam sua utilização, como custo exorbitante de instalação e manutenção para os sensores e inconsistência de resultado para heurísticas \cite{Zhuang2022}.
+
+Assim sendo, é sugerido utilizar técnicas de aprendizagem profunda que vem obtendo cada vez melhores resultados.
+Segundo \citeonline{jain2000statistical} já há bons resultados em diversas áreas como: mineração de dados (\textit{data mining}); análise de imagens; análise de texto; inspeção visual para automação industrial; busca e classificação em base de dados multimídia; reconhecimento biométrico, incluindo faces, íris ou impressões digitais.
+
+\section{Objetivos}
+O objetivo deste trabalho é utilizar técnicas de aprendizagem profundo em união com visão computacional para o reconhecimento de padrões de manifestação patológicas a partir de imagens da estrutura.
+Para tal, utiliza-se de redes neurais convolucionais aplicadas em análise de imagens para reconhecer padrões de falhas em sistemas estruturais e classificar estes em estruturas saudáveis ou que apresentem  patologias.
+
+\section{Objetivos específicos}
+Os objetivos específicos são:
+
+\begin{itemize}
+    \item Explorar os problemas que ocorrem em OAE's, como fissuras e exposição de armadura;
+    \item Levantamento das bases de dados de imagens de fissuras;
+    \item Levantamento dos modelos de aprendizado profundo que melhor se encaixam ao problema;
+    \item Validação dos modelos nas bases de dados de imagens de fissuras em OAE's;
+    \item Análise da correlação entre as bases de dados de imagens;
+    \item Análise dos resultados.
+\end{itemize}
+
+
+\section{Metodologia}
+
+O método utilizado consiste em utilizar quatro bases de dados indicadas por \citeonline{zoubir2021crack} e um subconjunto da união destas para o treinamento de duas arquiteturas de redes neurais convolucionais: \sigla{VGG }{\textit{Visual Geometry Group}} 16 \cite{simonyan2014very} e ResNet \cite{he2016deep}.
+Cada arquitetura pode ser utilizada com e sem transferência de aprendizado.
+
+O processo para utilização dessas bases de dados pode ser resumido em duas etapas principais. 
+Primeiro, foi feita a busca e a compreensão dos artigos citados por \citeonline{zoubir2021crack}, o que permitiu encontrar as bases de dados online e fazer o \textit{download} delas localmente. 
+Em seguida, cada base foi organizada em duas pastas, correspondentes a cada rótulo utilizado. 
+Como os autores já disponibilizaram as bases de dados com a rotulação e o pré-processamento necessários, não foi necessário realizar esses procedimentos novamente.
+
+Para a aplicação dos modelos de redes neurais convolucionais, cada uma dessas bases é dividida em duas partes: 90\% para o treinamento e 10\% para os testes. 
+Durante o treinamento, a técnica de validação estratificada é utilizada com 10 grupos de divisão, aplicando os 90\% da base de treinamento. 
+A acurácia e o \textit{loss} são calculadas para cada grupo, e em seguida, a média, a variância e o desvio padrão são determinados a partir desses valores.
+Em seguida, os resultados da validação cruzada são analisados para avaliar a integridade, confiabilidade e robustez dos modelos.
+
+Caso essas métricas sejam satisfatórias, o melhor modelo de cada arquitetura é selecionado para uma bateria de testes. 
+Os primeiros testes são realizados com os 10\% mencionados anteriormente, ou seja, os 10\%. 
+Por fim, o modelo selecionado é aplicado a todas as outras bases de dados para avaliar a correlação entre elas e determinar qual é a melhor base para treinar um modelo.
+A partir desses testes, métricas como acurácia, precisão, sensibilidade, especificidade e $F_{1}$-Score são calculados e utilizados para analise dos modelos e das bases.
+
+
+\section{Contribuições para a área de pesquisa}
+
+No geral, os resultados que utilizaram modelos de redes neurais convolucionais com transferência de aprendizado obtiveram desempenhos satisfatórios, com acurácias acima de 90\% e valores de $F_{1}-Score$ acima de 80\% para maioria dos casos.
+Isso contando os resultados da validação cruzada estratificada e os testes realizados sobre a mesma base em que o modelo foi treinado.
+
+Sobre esses resultados, os modelos VGG16 com transferência de aprendizagem, Densenet e Resnet apresentaram valores médios de $F_{1}-Score$ de 92,93\%, 91,11\% e 91,12\%, respectivamente.
+Logo, o modelo VGG16 teve os melhores resultados.
+
+Posteriormente, foram realizadas inspeções visuais de forma minuciosa das bases de dados para argumentar sobre os resultados encontrados.
+Em seguida, experimentos foram realizados para avaliar o desempenho de modelos treinados em uma base de dados e testados em outras. 
+Os resultados complementam  as análises visuais e mostraram que o uso de um subconjunto que abrange as imagens de todas as bases de dados é a base mais eficaz para treinamento. 
+Nesses experimentos, o modelo Resnet foi o que obteve melhor desempenho com $F_{1}-Score$ de 96,44\%, indicando maior capacidade de abstração e generalização de dados em comparação com os outros modelos testados. 
+
+
+Em suma, os resultados obtidos nesses experimentos são de grande relevância para a escolha de modelos e métodos de treinamento em redes convolucionais. 
+Ademais, graças a esses experimentos, foi possível identificar qual base de dados apresentou os melhores resultados quando aplicada em todas as imagens. 
+Essas informações são valiosas para orientar futuros trabalhos na área de processamento de imagens e aprendizado de máquina, contribuindo para o aprimoramento de técnicas e algoritmos utilizados em aplicações práticas.
+Além disso, com o uso dessas técnicas avançadas de processamento de imagens e aprendizado de máquina, é possível reduzir significativamente o tempo e os custos envolvidos na inspeção e manutenção dessas estruturas, garantindo a segurança e a integridade das mesmas. 
+Portanto, esses resultados têm implicações diretas na engenharia civil, auxiliando na manutenção e preservação de infraestruturas.
+
+\section{Organização do texto}
+
+O texto é organizado da seguinte maneira: Este primeiro capítulo apresenta a introdução do projeto. 
+No \autoref{chapter:concreto} são apresentados os conceitos de estruturas de concreto e patologia, e sua problemática. 
+No \autoref{chapter:deep_learn} é explicado sobre aprendizagem de máquina, desde seu conjunto maior até chegar em redes neurais convolucionais que é o foco desta monografia.
+
+O \autoref{chapter:correlatos} apresenta trabalhos recentes na literatura que empregam redes neurais de forma correlata ao tema desta monografia.
+No \autoref{chapter:metodologia} é dissertado a metodologia de como os experimentos que geram os resultados finais foram realizados.
+No \autoref{chapter:resultados} são apresentados os resultados.
+Por fim, o \autoref{chapter:conclusao} apresenta as conclusões da pesquisa.

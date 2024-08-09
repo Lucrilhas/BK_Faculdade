@@ -1,0 +1,232 @@
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% UFGRC: Modelo de Trabalho Acadêmico em conformidade com 
+% ABNT NBR 14724:2011: Informação e documentação - Trabalhos acadêmicos -
+% Apresentação
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+% Opções: 
+%   Tipo do trabalho     = tcc1/tcc2
+%   Situação do trabalho = pre-defesa/pos-defesa
+% -- opções do pacote babel --
+% Idioma padrão = brazil
+	%english,			% idioma adicional para hifenização
+	%brazil				% o último idioma é o PRINCIPAL do documento
+\documentclass[tcc2, pos-defesa, english, brazil]{packages/ufgrc}
+
+% ---------------------------------------------------------------------------
+% Pacotes Opcionais
+% ---------------------------------------------------------------------------
+\usepackage{rotating}           % Usado para rotacionar o texto
+\usepackage[all,knot,arc,import,poly]{xy}   % Pacote para desenhos gráficos
+% Este pacote pode conflitar com outros pacotes gráficos como o ``pictex''
+% Então é necessário usar apenas um dos pacotes conflitantes
+\newcommand{\VerbL}{0.52\textwidth}
+\newcommand{\LatL}{0.42\textwidth}
+\newcommand\wander[1]{{\color{red}#1}} % Comando correção Wanderley
+% ---------------------------------------------------------------------------
+
+
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+% Tanto na capa quanto nas folhas de rosto apenas a primeira letra da primeira palavra (ou nomes próprios) devem estar em letra maiúscula, todas as demais devem ser em letra minúscula.
+\titulo{Aplicação de técnicas de visão computacional para detecção de fissuras em obras de arte especiais}
+\autor[Cruvinel, L. E. A]{Lucas Elias de Andrade Cruvinel}
+\genero{M} % Gênero do autor (M = Masculino / F = Feminino)
+\orientador[Orientadora]{Prof.$^a$ Dr.$^a$}{Núbia Rosa da Silva}
+\coorientador{Prof. Dr.}{Wanderlei Malaquias Pereira Junior}
+\data{11}{11}{2022} % Data da defesa
+% ---
+
+% Membros da banca examinadora
+% - O primeiro membro será automaticamente o orientador
+% - Caso haja coorientador, este será o segundo membro
+% Nome dos demais membros e suas instituições
+\membrobanca{Fulano de Tal}{Instituição do Fulano de Tal}
+\membrobanca{Ciclano de Tal}{Instituição do Ciclano de Tal}
+
+% ---
+% RESUMOS
+% ---
+
+% Resumo em PORTUGUÊS
+% conter no máximo 500 palavras
+% conter no mínimo 1 e no máximo 5 palavras-chave (obrigatoriamente separadas por vírgula)
+\textoresumo[brazil]{
+% Contexto
+ O material de construção mais utilizado do mundo, o concreto, ainda possui problemas como fissuras e exposições de armadura que podem acontecer por conta da ação do tempo ou do ambiente em que se encontra, não sendo humanamente possível prever tudo o que acontecerá com o mesmo para que se prepare na hora de sua construção inicial. 
+ %
+ % lacuna
+ Por conta disso se faz necessário que durante toda sua vida útil aconteça um monitoramento sobre o mesmo, o que é custoso e trabalhoso caso seja feito de forma manual ainda mais quando se trata de estruturas como Obra de Arte Especial onde a acessibilidade humana é mínima. 
+ %
+ % Objetivo
+ A partir dessa problemática, este projeto de pesquisa tem como objetivo treinar um modelo computacional de rede neural convolucional para que através de imagens, seja possível classificar concreto como íntegro ou com necessidade de manutenção.
+ %
+ % Metodologia
+ Para tal, será necessário a implementação de uma rede neural convolucional utilizando a base de dados de \citeonline{maguire2018sdnet2018} para treina-la até que se torne suficiente para resolver o problema. 
+ %
+ % Resultados esperados
+ %Até o final desse projeto se busca ter a implementação completa dessa rede neural convolucional e com resultados aceitos pela comunidade de engenheiros estruturais.
+}{Inspeção e monitoramento de Concreto, Fissuração e exposição da armadura, Rede neural convolucional}
+
+
+% resumo em INGLÊS
+% conter no máximo 500 palavras
+% conter no mínimo 1 e no máximo 5 palavras-chave (obrigatoriamente separadas por vírgula)
+\textoresumo[english]{
+% Contexto
+ O material de construção mais utilizado do mundo, o concreto, ainda possui problemas como fissuras e exposições de armadura que podem acontecer por conta da ação do tempo ou do ambiente em que se encontra, não sendo humanamente possível prever tudo o que acontecerá com o mesmo para que se prepare na hora de sua construção inicial. 
+ %
+ % lacuna
+ Por conta disso se faz necessário que durante toda sua vida útil aconteça um monitoramento sobre o mesmo, o que é custoso e trabalhoso caso seja feito de forma manual ainda mais quando se trata de estruturas como Obra de Arte Especial onde a acessibilidade humana é mínima. 
+ %
+ % Objetivo
+ A partir dessa problemática, este projeto de pesquisa tem como objetivo treinar um modelo computacional de rede neural convolucional para que através de imagens, seja possível classificar concreto como íntegro ou com necessidade de manutenção.
+ %
+ % Metodologia
+ Para tal, será necessário a implementação de uma rede neural convolucional utilizando a base de dados de \citeonline{maguire2018sdnet2018} para treina-la até que se torne suficiente para resolver o problema. 
+ %
+ % Resultados esperados
+ %Até o final desse projeto se busca ter a implementação completa dessa rede neural convolucional e com resultados aceitos pela comunidade de engenheiros estruturais.
+}{Inspeção e monitoramento de Concreto, Fissuração e exposição da armadura, Rede neural convolucional}
+    
+% ---
+% Configurações de aparência do PDF final
+% ---
+\hypersetup{
+	colorlinks=true     % false: boxed links; true: colored links
+}
+% --- 
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+
+% Inserir a ficha catalográfica
+%\incluifichacatalografica*{tex/pre-textual/fichaCatalografica.pdf}
+\incluifichacatalografica
+
+% DEDICATÓRIA / AGRADECIMENTO / EPÍGRAFE
+%\textodedicatoria*{tex/pre-textual/dedicatoria}
+%\textoagradecimentos*{tex/pre-textual/agradecimentos}
+%\textoepigrafe*{tex/pre-textual/epigrafe}
+
+% Inclui a lista de figuras
+%\incluilistadefiguras
+
+% Inclui a lista de tabelas
+%\incluilistadetabelas
+
+% Inclui a lista de quadros
+%\incluilistadequadros
+
+% Inclui a lista de algoritmos
+%\incluilistadealgoritmos
+
+% Inclui a lista de códigos
+%\incluilistadecodigos
+
+% Inclui a lista de siglas e abreviaturas
+%\incluilistadesiglas
+
+% Inclui a lista de símbolos
+%\incluilistadesimbolos
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+\chapter{Introdução}
+\label{chapter:introducao}
+\input{tex/introducao}
+
+\chapter{Concreto, Fissuras e OAE`s}
+\label{chapter:concreto}
+\input{tex/concreto}
+
+\chapter{Aprendizado de Máquina}
+\label{chapter:deep_learn}
+\input{TCC UFG/tex/deep_learning}
+
+\chapter{Metodologia}
+\label{chapter:metodologia}
+\input{tex/metodologia}
+
+\chapter{Resultados}
+\label{chapter:resultados}
+\input{tex/resultados}
+
+\chapter{Cronograma} %Futuras conclusões
+\label{chapter:conclusao}
+\input{tex/conclusao}
+
+% ---
+% Finaliza a parte no bookmark do PDF, para que se inicie o bookmark na raiz
+% ---
+\bookmarksetup{startatroot}% 
+% ---
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{references}
+
+% ---------------------------------------------------------------------
+% GLOSSÁRIO
+% ---------------------------------------------------------------------
+
+% Arquivo que contém as definições que vão aparecer no glossário
+\input{tex/glossario}
+% Comando para incluir todas as definições do arquivo glossario.tex
+\glsaddall
+% Impressão do glossário
+\printglossaries
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+%\begin{apendicesenv}
+%
+%    \chapter{}
+%    \label{}
+%    \input{}
+%
+%\end{apendicesenv}
+% ---
+
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+%\begin{anexosenv}
+%
+%    \chapter{} 
+%    \label{}
+%    \input{tex/annex/}
+%
+%\end{anexosenv}
+% ---
+
+\end{document}

@@ -1,0 +1,188 @@
+
+\section{Considerações Iniciais}
+
+A existência de vários trabalhos recentes na literatura que empregam redes neurais convolucionais para detectar fissuras e auxiliar na manutenção de construções é uma evidência clara de que o tema está em constante desenvolvimento e é de grande atualidade. 
+Ademais, essas pesquisas também constituem uma importante base para o presente estudo. 
+Logo, este capítulo tem como foco descrever alguns trabalhos correlatos que corroboram com o tema deste trabalho.
+
+Este capítulo é dividido em sete seções. 
+Cinco delas discutem trabalhos correlatos que utilizam diferentes arquiteturas de redes neurais convolucionais. 
+A seção final resume os resultados desses trabalhos.
+
+
+
+\section{Aplicação da arquitetura AlexNET}
+
+% Trabalho Correlato que utiliza AlexNEt
+Em seu trabalho, \citeonline{kim2018automated} percebe a necessidade da aplicação de métodos de \textit{Deep Learning} aplicados na detecção de fissuras em imagens de superfícies de estruturas.
+Segundo os autores, a escolha se dá principalmente por conta da capacidade do \textit{Deep Learning} em superar dificuldades encontradas em experimentos ao ar livre, como a mudança de iluminação.
+
+Com o objetivo de atingir tal meta, \citeonline{kim2018automated} propõem, inicialmente, a criação de um banco de dados. 
+Para isso, utilizaram a ferramenta \textit{ScrapeBox} para realizar uma busca na internet e coletar imagens com base em palavras-chave. 
+Após a coleta, foi formado um banco de dados com cerca de 7.000 imagens, que foram pré-processadas e divididas em 50.000 imagens. 
+Essas imagens foram separadas em 5 classes: fissura,  poucas juntas, muitas juntas, superfície saudável e presença de plantas. 
+Essa abordagem foi adotada porque \citeonline{kim2018automated} destaca que ter apenas dois classificadores (com fissura e sem fissura) resultaria em muitos falsos positivos quando aplicados em imagens com muito ruído.
+Tanto que, \citeonline{kim2018automated} relata um acréscimo de acurácia de 32\% para 92\% utilizando este método.
+
+Como modelo computacional, foi escolhida a arquitetura AlexNet pelo fato de ser uma arquitetura bem difundida e que apresenta bons resultados em aplicações semelhantes. 
+Para o modelo de treinamento do modelo AlexNet, optou-se por realizar apenas o aperfeiçoamento com base nas novas classes a partir do modelo pré-treinado no banco de dados \textit{imagenet}.
+Segundo \citeonline{kim2018automated}, essa decisão leva em conta que treinar o modelo do início toma o tempo de uma semana mesmo em um computador de alto padrão, o que impossibilita realizar testagens rápidas com diferentes configurações. 
+
+Como último estágio de processamento, é desenvolvido uma um espécie de janela deslizante de tamanho bem menor que a imagem original. 
+Essa janela irá percorrer a imagem original e aplicar o segmento da janela como entrada no modelo, dessa forma obtendo probabilidades para cada pedaço da imagem para que possa ter um cálculo de correlação entre as porcentagens e diminuir o erro, além de detectar a posição das rachaduras com maior exatidão.
+
+O método utilizado consiste em separar a base de dados em 80\% para treino e 20\% para teste.
+O treino ocorreu em 60 épocas, tomando 316 minutos. 
+O resultado foi que já na época 8 houve uma acurácia entre 98\% e 99\% na época 22, e se manteve nessa faixa até o final da validação.
+
+A fim de avaliar o modelo, \citeonline{kim2018automated} realizaram capturas de imagens em ambientes de construção utilizando câmeras de celular e drones. 
+Eles aplicaram o modelo já treinado e o compararam com os resultados rotulados manualmente.
+Vale notar que essas imagens contém diversos tipos de ruídos, como canos, moldes, entre outros. 
+O resultado foi a presença de uma acurácia acima de 90\% para todos os testes, junto com uma média de 86\% de precisão.
+
+\citeonline{kim2018automated} considera o resultado excelente, porém aponta suas limitações em distinguir fissuras de objetos que são indistinguíveis apenas com visão e conclui o estudo com um teste em campo utilizando um drone e realizando uma detecção em tempo real.
+Este apresenta uma precisão de 88\% a nível de pixel e detectando 15 de 16 fissuras, embora ele explique que essa fissura não detectada realmente é bem fina e que a imagem capturada por drone é levemente borrada e atrapalhe na detecção do modelo.
+
+
+\section{Aplicação da arquitetura VGG16}
+% Trabalho Correlato que utiliza VGG16
+
+O artigo de \citeonline{gopalakrishnan2018crack} apresenta uma diferente técnica dos trabalho citados anteriormente aplicada em conjunto com a arquitetura VGG16. 
+Segundo \citeonline{gopalakrishnan2018crack}, aprimorar as ferramentas utilizadas pelos engenheiros pode ajudar a garantir melhores condições para realizar auditorias em infraestruturas civis, além de reduzir os custos desses processos, que muitas vezes precisam ser realizados com frequência.
+Como solução, a principal ferramenta apresentada é a utilização de drones, que vem sendo cada vez mais populares em diversos ramos, desde aplicações em monitoramento pós desastres naturais até inspeções de construções, tendo um grande impacto por deixar tais atividades mais fáceis, seguras e com um ótimo custo-benefício \cite{vidyadharan2017civil}.
+
+Nos anos recentes, até mesmo drones mais populares tem a capacidade de alta movimentação, sinal com grande espaço de cobertura e câmeras capazes de capturar imagens em alta definição com resolução suficiente para capturar até mesmo micro-fissuras sem precisar estar muito próximo da estrutura \cite{gopalakrishnan2018crack}. 
+Só com as imagens capturadas com drone já é possível para um engenheiro ter um laudo sobre as patologias que uma estrutura contém, servindo como uma ótima ferramenta, contudo. 
+\citeonline{gopalakrishnan2018crack} vai além e propõem uma abordagem mais avançada para a detecção de rachaduras em infraestruturas civis, através da aplicação de algoritmos de \textit{deep learning}, especificamente, utilizando redes neurais convolucionais. 
+Isso se deve a vários experimentos recentes que demonstram a eficácia dessas redes em processar imagens e vídeos, além de serem capazes de lidar com entradas de dados brutos ou sem rótulos.
+
+\cite{gopalakrishnan2018crack} enfrentaram uma grande dificuldade relacionada à falta de uma base robusta de imagens de fissuras estruturais. 
+Para superar essa limitação, optaram por uma abordagem mais barata e eficiente: utilizaram modelos computacionais previamente treinados em bases de dados massivas, como o \textit{ImageNet}, e realizaram apenas um aprimoramento nos parâmetros do modelo para as novas classes desejadas. 
+No caso, foram utilizadas apenas duas classes: com ou sem fissura.
+Esse método foi realizado a partir da ferramenta Keras \cite{chollet2015keras} que realiza a implementação do modelo VGG16 já possuindo a opção de utilizar os parâmetros pré treinados na base \textit{ImageNet}.
+
+A base de dados utilizada é de autoria de \cite{gopalakrishnan2018crack}, que realizou a captura de 130 imagens de estruturas de concreto, onde 80 destas apresenta fissuras.
+Essa captura é feita a partir de um drone de alta performance com uma câmera de alta definição. 
+As imagens obtidas podem variar de acordo com a proximidade do drone à superfície e ângulo da câmera no momento da captura, atribuindo mais flexibilidade para realizar várias iterações em uma mesma fissura \cite{gopalakrishnan2018crack}.
+
+Graças a rede VGG16 já estar pré treinada e já saber extrair características da imagem, \cite{gopalakrishnan2018crack} treina apenas as últimas camadas para que aprendam a classificar as classes desejadas. 
+Diferentes classificadores são treinados também na base do \textit{ImageNet} e testados para ser usado em conjunto ao VGG16, tais modelos de classificadores são: Rede neural de uma camada e 256 neurônios com otimizador \sigla{ADAM}{\textit{Adaptive Moment Estimation}} \cite{kingma2014adam}, floresta aleatória de 300 árvores, floresta extremamente aleatória de 300 árvores, máquina de vetores de suporte do tipo linear, e regressão logística.
+Para finalizar essa camada é utilizado a função de ativação \textit{softmax} para gerar o resultado final.
+
+A base de dados foi dividida em 70\% treino, 10\% validação e 20\% teste, e com treino realizado ao longo de 50 iterações.
+Os resultados dos testes foram analisados em acurácia, precisão, \textit{recall}, \textit{F1-score} e \textit{Cohen`s Kappa score}.
+Com toda a fase de treinamento e validação realizada, os testes mostram que o modelo VGG16 utilizando transferência de aprendizado e o classificador final com uma rede neural de uma camada de 256 neurônios ou com regressão logística apresentaram ótimos resultados, com a acurácia de 89\%, precisão de 91\%, \textit{recall} de 89\%, \textit{F1-score} de 89\% e \textit{Cohen`s Kappa score} de 78,8\%.
+
+\section{Aplicação da arquitetura DenseNet}
+
+% Trabalho Correlato que utiliza DenseNet
+Os estudos propostos por \citeonline{qiao2021computer} implicam que há necessidade de evoluir os métodos atuais de monitoramento e manutenção de pontes, em específico  a detecção de fissuras em sua estrutura de concreto, sendo ferramentas como sensores demasiadamente caras, como alternativa é sugerido a utilização de visão computacional. 
+Ao comparar as possíveis ferramentas que podem ser aplicadas com visão computacional, se percebe que opções como processamento de imagem baseado em percolação, limiarização e detectores de bordas são escolhas populares, porém que falham quando se buscam uma maior automatização tendo em vista o ambiente efêmero em que são aplicadas.
+
+Ao buscar uma solução, \citeonline{qiao2021computer} realizam uma busca dentro da área do \textit{Deep Learning}, explicando que essa área possui três características desejadas: Robustez, capacidade de aprendizado e automatização. 
+Robustez se refere a capacidade do modelo em extrair as características desejadas de uma imagem com estabilidade, capacidade de aprendizado, permitindo que o modelo aprenda a identificar as características que são importantes para o problema específico. 
+Automatização diz respeito à capacidade do modelo conseguir operar sem ou quase sem auxílio  humano.
+
+O modelo escolhido por \citeonline{qiao2021computer} é o DenseNet \cite{huang2017densely}, por conta de suas inovações no campo do \textit{Deep Learning}, e ainda fundamenta mencionando que a principal vantagem do DenseNet é o decréscimo do custo computacional por camada na rede neural causado pela reaproveitamento de recursos dentro da rede, dessa forma permitindo que o DenseNet precise re-aprender menos características, consequentemente diminuindo consideravelmente a quantidade de parâmetros e cálculos, além de possuir uma ótima performance em fugir do \textit{overfitting}.
+
+Dando prosseguimento, \citeonline{qiao2021computer} argumentam que combinar \textit{Deep Learning} com outros algoritmos de processamento de imagem pode produzir melhores resultados, à vista disso sendo implementado o modulo EMA (\textit{Expectation-Maximization Attention}) baseado no algoritmo de maximização de expectativa (EM) \cite{li2019expectation}, aprimorando o resultado fazendo com que o DenseNet tenha mais atenção nas áreas mais danificadas. 
+Esse algoritmo é aplicado durante as últimas camadas de \textit{polling}, transformando a arquitetura em EMA-DenseNet
+
+Como base de dados, \citeonline{qiao2021computer} utilizaram a base de dados de \citeonline{yang2018automatic} que contém cerca de 800 imagens para validação.
+Entretanto, é relatado que as imagens dessa base podem ser inconsistentes com os ambientes encontrados em obras de construção.
+Portanto, foram fotografadas pontes da região de Xuzhou, na China, resultando em 1800 imagens de fissuras e  2500 imagens com exposição de armadura.
+Por fim, para melhorar ainda mais o desempenho do modelo, as imagens foram submetidas a técnicas de aumento de dados (\textit{data augmentation}), que incluíram recorte em imagens menores, rotação e aumento de contraste. 
+Além disso, todas as fissuras foram marcadas a nível de pixel, uma escolha do autor para utilizar aprendizado supervisionado \cite{kim2018automated}.
+
+O treinamento utiliza o algoritmo ADAM de otimização \cite{kingma2014adam} para otimizar os parâmetros do modelo durante o treinamento. 
+O algoritmo ADAM otimiza a função de perda do modelo, minimizando-a iterativamente em relação aos parâmetros do modelo.
+O método de avaliação escolhido foi de verificar através de quatro cálculos: 
+PA, que representa a proporção do número de pixels preditos sobre o total de pixels, 
+MPA utiliza de PA para calcular a proporção de pixels em cada classe que estão corretamente classificados para gerar uma média entre todas as classes, 
+\sigla{MIoU}{Mean Intersection over Union} que calcula a média da proporção de \textit{cross over} em cada classe (PA), 
+e por último o cálculo de precisão que é a porcentagem dos pixels corretamente classificados em relação à todos os pixels (MPA).
+
+Para demonstrar a capacidade do EMA-DenseNet, também são treinados as arquiteturas \sigla{FCN}{\textit{Fully Convolutional Network}} \cite{yang2018automatic}, SegNet \cite{badrinarayanan2017segnet}, DeepLab v3+ \cite{chen2018encoder} e SDDNet \cite{choi2019sddnet}, para comparação. O treinamento  foi feito durante 20.000 iterações, onde já na iteração 2.000 já uma convergência muita rápida com MIoU chegando à um valor estável de 87.42\%. 
+\citeonline{qiao2021computer} relatam que o processo de treinamento já prova que o algoritmo é confiável pois o modelo após as 20.000 iterações apresentam um MIoU, PA, MPA e precisão de 87.42\%, 97.58\%, 92.59\% e 81.97\% respectivamente. 
+Com o resultado de todos os modelos é exibido que de todos os modelos, o EMA-DenseNet teve os melhores resultados em quase todos os quesitos, exceto em PA, onde o modelo FCN obteve 97.96\%.
+
+Como forma de testar os resultados obtidos, os próprios autores coletam uma base de dados com bem mais ruídos, e danos muito maiores, nesse caso foi apresentado um MIoU, PA, MPA e precisão de 79.87\%, 97.31\%, 86.35\% e 74.70\% respectivamente, e tendo as melhores resultados em comparado com os outros modelos por uma grande diferença em maioria.
+
+
+\section{Aplicação da arquitetura Inception V3}
+
+% Trabalho Correlato que utiliza Inception V3
+
+O artigo de \citeonline{zoubir2021crack}, apresenta uma comparação interessante entre modelos de redes neurais convolucionais. 
+\citeonline{zoubir2021crack} declaram que utilizar \textit{Deep Learning} a partir de redes neurais convolucionais são melhores que os métodos padrões de processamento de imagens por conta se superar suas limitações.
+
+Entretanto, \citeonline{zoubir2021crack} relatam que tiveram dificuldades de treinar esses modelos por conta da falta de uma base de dados robusta. 
+Ainda são citados exemplos de bases de dados considerados robustas \citeonline{yang2017deep}, \citeonline{maguire2018sdnet2018}, \citeonline{mundt2019meta} e \citeonline{xu2019automatic}.
+Logo, \citeonline{zoubir2021crack} buscam contribuir organizando uma base de dados de imagens de patologias em estruturas de concreto, em especial de pontes e depois testar essa base de dados utilizando-a em três diferentes arquiteturas de rede neural convolucional: VGG16 \cite{simonyan2014very}, VGG19 \cite{simonyan2014very} e InceptionV3 \cite{szegedy2015going}.
+
+Após um período extenso e caro de trabalho manual, foram coletadas 572 imagens de resolução $5152 \times 3864$ pixels em diversos ambientes com diferentes luminosidades. 
+Após a coleta, todas as imagens foram manualmente recortadas para definir melhor as zonas com falhas estruturais. 
+Os resultados foram 1.304 imagens que apresentam fissuras e 5.634 imagens apenas com o concreto saudável, todas estas com resolução de 200x200 pixels.
+
+A base de dados foi dividida  em 70\% para treino, 10\% para validação e 20\% para teste, e para incrementar o treinamento dos modelos proposto foi utilizado a técnica de transferência de aprendizado, onde são utilizados os modelos já treinados a partir da base de dados do \textit{ImageNet} \cite{deng2009imagenet} e depois apenas aperfeiçoar os parâmetros para esse tipo de classificação em específico.
+Todos os modelos foram treinados em 10 épocas e o método de validação foi a de acurácia através da relação dos acertos sobre o total.
+
+Após finalizar os experimentos, os resultados de treinamento, validação e testes do modelo InceptionV3, foi de 96,96\%, 96,88\% e 95,89\% respectivamente, obtendo o melhor resultado final, o modelo VGG19 teve como resultados 96,17\%, 96,25\% e 95,39\% respectivamente, enquanto o pior modelo foi o VGG16 com os resultados 96,75\%,  97,50\% e 94,89\% respectivamente.
+Com isso provando que um resultado ótimo pode ser modelado mesmo com a utilização da transferência de aprendizado.
+
+\section{Aplicação da arquitetura ResNet}
+
+% Trabalho Correlato que utiliza ResNet
+Verificar o trabalho de \citeonline{dung2019autonomous} permite entender novos métodos de aplicação de CNN, pois, neste trabalho é proposto um método baseado em modelos de FCN.
+Para tal, são utilizados diferentes arquiteturas de CNN em uma base de dados pública de imagens separadas em com fissuras e sem fissuras em concreto.
+Em seguida, é encontrado o modelo com a maior performance a partir de seus resultados.
+Por fim, o melhor modelo e seus pesos são refatorados para funcionar como a parte de codificador para uma FCN.
+
+As arquiteturas de CNN utilizadas pelo autor foram VGG16, InceptionV3 e ResNet-152, todas já pré-treinadas para que apenas fosse necessário mais um pequeno treinamento para aperfeiçoar os pesos para essa tarefa em específico. 
+As camadas finais de todos os modelos são substituídos por uma camada convolucional que faz a ligação com os blocos da FCN.
+Nesse caso, a FCN possui uma saída com função de ativação sigmóide com resultado binário, indicando se tem ou não fissuras. 
+Como configuração são utilizados o método de otimização utilizado é o \textit{rmsprop} \cite{tieleman2012lecture} e para cálculo  do erro é utilizado o método \textit{binary cross-entropy loss}.
+
+A base de dados é a proposta por \cite{Ozgenel2018}, e segundo \citeonline{dung2019autonomous} é uma base de dados muito boa por conter várias condições dinâmicas, como iluminação e técnica de foto.
+A base possui 40.000 imagens de resolução $227 \times 227$ pixels que foram processadas de 458 imagens de resolução $4032 \times 3024$ pixels através do método proposto por \cite{Zhang2017}. 
+
+As CNN's foram treinadas por 50 épocas, com tamanho de lote 16. 
+Dessa forma, após o treinamento os modelos VGG16 e InceptionV3 alcançaram acurácia de 99,9\%, enquanto o ResNet teve um máximo de 97,5\%.
+O resultado se manteve praticamente o mesmo durante os testes, sendo que em 4.000 imagens utilizadas para teste, o modelo VGG16 se sobressaiu com apenas 5 resultados incorretos, o modelo InceptionV3 obteve apenas 9 resultados incorretos, enquanto o ResNet alcançou 122 resultados incorretos.
+
+Os pesos e a arquitetura do melhor modelo, o VGG16, foram utilizados para compor o codificador do FCN, e o decodificador implementado por blocos totalmente convolucionais. 
+Tal modelo é re-treinado utilizando 500 imagens de uma base feita para segmentação, também proposta por \cite{Ozgenel2018}.
+O foco agora é a segmentação de imagens, ou seja, localizar as fissuras dentro das imagens.
+Para tal, é utilizado a função de \textit{loss} \textit{softmax cross-entropy} como função objetivo e o método \textit{Adam optimizer} \cite{kingma2014adam}. 
+O resultado obtido nesse método é de uma precisão de 90\% nos testes.
+
+
+\section{Síntese dos trabalhos apresentados}
+
+\begin{table}[htb]
+\centering
+\caption{Trabalhos correlatos}
+\label{tab:trabalhos_corr}
+\begin{tabularx}{\textwidth}{p{3cm}|X|l|c|p{2.6cm}|c} \hline
+Artigo & Arquitetura(s) & Melhor Modelo & Precisão & Base de dados & TL \\ 
+\hline
+\hline
+\citeonline{kim2018automated} & AlexNet & AlexNet & 92,35\% & \textit{Web Scrapping} & Sim \\ 
+\hline
+\citeonline{gopalakrishnan2018crack} & VGG16 & VGG16 + NN & 89,00\% & Própria & Sim \\ 
+\hline
+\citeonline{qiao2021computer} & EMA-DenseNet, SegNet, SDDNet, FCN e DeepLab v3+ & EMA-DenseNet & 92,59\% & \cite{yang2018automatic} e própria & Não \\ 
+\hline
+\citeonline{zoubir2021crack} & VGG16, VGG19 e Inception V3 & Inception V3 & 95,89\%  & Própria & Sim \\ 
+\hline
+\citeonline{dung2019autonomous} & VGG16, ResNet e InceptionV3  & VGG16 & 99,875\% & \cite{Ozgenel2018} & Sim \\ 
+\hline
+\end{tabularx}
+\fdadospesquisa
+\end{table}
+
+A análise dos resultados dos trabalhos correlatos apresentados na \autoref{tab:trabalhos_corr} indica que a maioria deles empregou a técnica de transferência de aprendizado. Embora essa técnica não resulte em perda de desempenho na maioria das situações, ela é utilizada principalmente em razão da escassez de conjuntos de dados robustos. De fato, com exceção do estudo de \citeonline{dung2019autonomous}, os conjuntos de dados foram criados pelos próprios autores, seja por meio de \textit{Web Scraping} ou de coleta de imagens fotográficas.
+
+Nos trabalhos que comparam diferentes modelos de CNN's, observa-se que, mesmo que um modelo seja mais recente ou teoricamente superior, não é garantido que ele será o melhor para a situação em questão. 
+Além disso, embora não seja explicitado na \autoref{tab:trabalhos_corr}, este capítulo também demonstra que um modelo pode ser o pior em alguns casos e o melhor em outros. 
+Em conclusão, não há um modelo intrinsecamente superior a outro, sendo necessário realizar testes e avaliações para determinar qual modelo se adapta melhor a um determinado problema.

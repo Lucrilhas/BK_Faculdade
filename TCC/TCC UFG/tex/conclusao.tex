@@ -1,0 +1,23 @@
+
+Em geral, os modelos treinados durante a validação cruzada estratificada \textit{K-fold} que não empregaram a técnica de transferência de aprendizado não foram capazes de aprender a classificar imagens como fissuradas ou saudáveis, resultando na incapacidade de detectar fissuras. 
+Mesmo aqueles modelos que conseguiram aprender sem a técnica de transferência de aprendizado foram superados por suas contrapartes que a utilizaram.
+
+Em contraste, os modelos que empregaram a técnica de transferência de aprendizado com pesos provenientes do conjunto de dados \textit{Imagenet} obtiveram resultados positivos, com acurácia superior a 90\% em todos os casos e valores de $F_{1}-Score$ superiores a 90\% na maioria dos casos.
+Além disso, quando testados em novas imagens dentro do mesmo conjunto de dados, esses modelos continuaram a apresentar resultados similares, o que, combinado com o uso do \textit{K-fold}, demonstra a confiabilidade desses modelos.
+
+Os modelos utilizados, VGG16, Densenet e Resnet obtiveram nos testes, médias de de $F_{1}-Score$ de 92,93\%, 91,11\% e 91,12\%, respectivamente.
+Logo, o modelo VGG16 obteve a melhor média de desempenho em comparação aos outros modelos avaliados.
+Em seguida, o modelo Resnet apresenta a segunda melhor média, e por fim, o Densenet.
+
+Adicionalmente, esta monografia oferece informações relevantes de cada fonte de dados através de análises visuais meticulosas. 
+Embora não sejam necessariamente definições estabelecidas, esses argumentos podem ser utilizados como um auxílio valioso e um contribuinte significativo para o tema em questão. 
+Através de uma análise visual aprofundada, a monografia apresenta uma compreensão mais clara e concisa das informações obtidas a partir de cada fonte de dados, permitindo que o leitor compreenda melhor as nuances do tópico discutido.
+Com base nisso, é possível extrair informações valiosas e utilizá-las para embasar ainda mais a discussão em torno do tema.
+
+Além disso, foram realizados experimentos para avaliar o desempenho de modelos treinados em uma base de dados e testados em outras. 
+Esses experimentos complementam  as análises visuais e evidenciaram que o uso de um subconjunto que abrange as imagens de todas as bases de dados é o método de treinamento mais eficaz. 
+Cabe destacar que o modelo Resnet apresentou o melhor desempenho nos testes realizados com essa base, indicando sua maior capacidade de abstração e generalização de dados em comparação aos outros modelos avaliados.
+
+Em resumo, as redes neurais convolucionais são ferramentas excelentes e de baixo custo que produzem resultados satisfatórios. 
+No entanto, ainda é necessário um especialista para selecionar, treinar, testar e implementar um modelo. 
+Além disso, embora os resultados possam ser muito bons, a intervenção humana é inevitável, pois qualquer erro pode ter consequências graves e irreversíveis. 

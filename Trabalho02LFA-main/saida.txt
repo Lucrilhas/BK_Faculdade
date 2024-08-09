@@ -1,0 +1,23 @@
+{
+	Estados: ['q0', 'q1', 'qf']
+	Estado inicial: ['q0']
+	Estado final: ['qf']
+	Alfabeto de entrada: ['a', 'b', 'E']
+	Alfabeto de pilha: ['A', 'Z']
+	Pilha inicial: ['Z']
+	Regras de transição:[
+				a-Z					a-A					b-A					E-Z					b-A					E-Z					
+		q0		['q0-AZ']				['q0-AA']				['q1-E']				['q1-Z']				['q1-E']				['q1-Z']				
+		q1		[]				[]				['q1-E']				['qf-Z']				['q1-E']				['qf-Z']				
+		qf		[]				[]				[]				[]				[]				[]				
+	]
+	Palavras:[
+		['']	->	O automato consegue ler essa palavra
+		['a', 'b']	->	O automato consegue ler essa palavra
+		['a', 'a', 'b']	->	O automato NÃO consegue ler essa palavra
+		['a', 'b', 'b']	->	O automato NÃO consegue ler essa palavra
+		['a', 'a', 'b', 'b']	->	O automato consegue ler essa palavra
+		['a', 'a', 'a', 'b', 'b', 'b']	->	O automato consegue ler essa palavra
+	]
+}
+
